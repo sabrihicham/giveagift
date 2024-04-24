@@ -1,0 +1,1 @@
+enum Pages { home, cards, stores, settings }
