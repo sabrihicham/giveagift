@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:giveagift/constants/enums.dart';
 import 'package:giveagift/view/cards/cards.dart';
 import 'package:giveagift/view/home/home.dart';
+import 'package:giveagift/view/settings/settings.dart';
+import 'package:giveagift/view/store/store.dart';
 
 class AppNavigation extends StatefulWidget {
   const AppNavigation({super.key});
@@ -103,6 +105,14 @@ class _AppNavigationState extends State<AppNavigation> {
           Padding(
             padding: EdgeInsets.only(bottom: bottomPadding),
             child: const CardsPage(),
+          ),
+         Padding(
+            padding: EdgeInsets.only(bottom: bottomPadding),
+            child: const Store(),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: bottomPadding),
+            child: const Settingspage(),
           ),
         ],
       )
