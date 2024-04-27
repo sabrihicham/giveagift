@@ -92,7 +92,7 @@ class ReadyCardsSourceRepository extends LoadingMoreBase<CardData> {
   bool forceRefresh = false;
 
   @override
-  bool get hasMore => (_hasMore && length < totalPages) || forceRefresh;
+  bool get hasMore => _hasMore || forceRefresh;
 
   ReadyCardRepository readyCardRepository;
 
