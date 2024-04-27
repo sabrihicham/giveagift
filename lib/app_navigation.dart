@@ -29,7 +29,6 @@ class _AppNavigationState extends State<AppNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomPadding = MediaQuery.of(context).padding.bottom + 60;
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true, 
@@ -101,23 +100,11 @@ class _AppNavigationState extends State<AppNavigation> {
       ),
       body: IndexedStack(
         index: Pages.values.indexOf(_selectedTab),
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            child: const HomePage(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            child: const CardsPage(),
-          ),
-         Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            child: const Store(),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            child: const Settingspage(),
-          ),
+        children: const [
+          HomePage(),
+          CardsPage(),
+          Store(),
+          Settingspage(),
         ],
       )
     );

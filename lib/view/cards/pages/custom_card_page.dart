@@ -90,13 +90,32 @@ class _CustomCardPageState extends State<CustomCardPage> {
       );
     } else if(widget.controller.customSubmissionState is SubmissionError) {
       return Center(
-        child: Text(
-          (widget.controller.customSubmissionState as SubmissionError).exception?.message ?? 'حدث خطأ ما',
-          style: const TextStyle(
-            color: Colors.red,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
+        child: Column(
+          children: [
+            Text(
+              (widget.controller.customSubmissionState as SubmissionError).exception?.message ?? 'حدث خطأ ما',
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            CupertinoButton(
+              onPressed: () {
+                widget.controller.fetchCustomCards();
+              },
+              color: Colors.blue,
+              child: const Text(
+                'إعادة المحاولة',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
@@ -588,33 +607,34 @@ class _CustomCardPageState extends State<CustomCardPage> {
                 child: Column(
                   children: [
                     buildStepContent(currentStep),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if(currentStep != CustomCardStep.color)
-                          IconButton(
-                            onPressed: () {
-                              onStepChanged(CustomCardStep.values[currentStep.index - 1]);
-                            },
-                            icon: Icon(
-                              Icons.adaptive.arrow_back_rounded,
-                            ),
-                          )
-                        else
-                          const SizedBox(),
-                        if(currentStep != CustomCardStep.reciverInfo)
-                          IconButton(
-                            onPressed: () {
-                              onStepChanged(CustomCardStep.values[currentStep.index + 1]);
-                            },
-                            icon: Icon(
-                              Icons.adaptive.arrow_forward_rounded,
-                            ),
-                          )
-                        else
-                          const SizedBox(),
-                      ],
-                    )
+                    if(controller.customSubmissionState is SubmissionSuccess)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if(currentStep != CustomCardStep.color)
+                            IconButton(
+                              onPressed: () {
+                                onStepChanged(CustomCardStep.values[currentStep.index - 1]);
+                              },
+                              icon: Icon(
+                                Icons.adaptive.arrow_back_rounded,
+                              ),
+                            )
+                          else
+                            const SizedBox(),
+                          if(currentStep != CustomCardStep.reciverInfo)
+                            IconButton(
+                              onPressed: () {
+                                onStepChanged(CustomCardStep.values[currentStep.index + 1]);
+                              },
+                              icon: Icon(
+                                Icons.adaptive.arrow_forward_rounded,
+                              ),
+                            )
+                          else
+                            const SizedBox(),
+                        ],
+                      )
                   ],
                 ),
               ),

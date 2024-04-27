@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:giveagift/view/cards/controller/cards_controller.dart';
@@ -110,20 +111,6 @@ class ReadyToUsePage extends StatelessWidget {
                 addAutomaticKeepAlives: true,
                 sourceList: controller.readyCardsSourceRepository,
                 lastChildLayoutType: LastChildLayoutType.fullCrossAxisExtent,
-                // extendedListDelegate: ExtendedListDelegate(
-                //   collectGarbage: (List<int> garbage) {
-                //     garbage.forEach((index) {
-                //       controller.readyCardsSourceRepository.removeAt(index);
-                //     });
-                //   },
-                //   lastChildLayoutTypeBuilder: (int index) {
-                //     if(index == controller.readyCardsSourceRepository.length - 1) {
-                //       return LastChildLayoutType.fullCrossAxisExtent;
-                //     }
-                //     return LastChildLayoutType.none;
-                //   },
-                //   // closeToTrailing: true,
-                // ),
                 cacheExtent: 280,
                 indicatorBuilder: (context, status) {
                   if(status == IndicatorStatus.none) {
@@ -176,7 +163,8 @@ class ReadyToUsePage extends StatelessWidget {
                         children: [
                           const Text('Error loading data'),
                           const SizedBox(height: 10),
-                          ElevatedButton(
+                          CupertinoButton(
+                            color: Color.fromRGBO(65, 84, 123, 1),
                             onPressed: () {
                               controller.readyCardsSourceRepository.refresh();
                             },
@@ -195,7 +183,9 @@ class ReadyToUsePage extends StatelessWidget {
                     return const SizedBox.shrink();
                   }
                 },
-                padding: EdgeInsets.symmetric(horizontal: (MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width > 600 ? 400 : 300)) / 2) / (MediaQuery.of(context).size.width > 600 ? 3 : 1),
+                padding: EdgeInsets.symmetric(
+                  horizontal: ((MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width > 600 ? 400 : 300)) / 2) / (MediaQuery.of(context).size.width > 600 ? 3 : 1),
+                ),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 1,
                   crossAxisSpacing: 3.0,

@@ -194,6 +194,12 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+        SliverToBoxAdapter(
+          child: Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).padding.bottom,
+          ),
+        )
       ],
     );
   }
