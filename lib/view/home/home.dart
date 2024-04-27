@@ -38,9 +38,9 @@ class HomePage extends StatelessWidget {
                           height: 200,
                           width: 300,
                           padding: const EdgeInsets.symmetric(horizontal: 35),
-                          decoration: BoxDecoration(
-                            color: const Color.fromRGBO(182, 32, 38, 0.75),
-                            borderRadius: BorderRadius.circular(10),
+                          decoration: const BoxDecoration(
+                            color:  Color.fromRGBO(182, 32, 38, 0.75),
+                            shape: BoxShape.rectangle,
                           ),
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -6,7 +6,7 @@ class ReadyCardRepository {
 
   ReadyCardRepository(this.readyCardsSource);
 
-  Future<ReadyCardsResponse> getReadyCards({int? minPrice, int? maxPrice, int? page, int? limit}) async {
-    return await ReadyCardsSource.getReadyCards(minPrice: minPrice, maxPrice: maxPrice, page: page, limit: limit);
+  Future<ReadyCardsResponse> getReadyCards({int? minPrice, int? maxPrice, int? page, int? limit, List<String>? brands}) async {
+    return await ReadyCardsSource.getReadyCards(minPrice: minPrice, maxPrice: maxPrice, page: page, limit: limit, brands: brands);
   }
 }

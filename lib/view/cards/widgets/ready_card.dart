@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:giveagift/view/cards/data/models/ready_card.dart';
+import 'package:giveagift/view/cards/widgets/brand_image.dart';
 import 'package:giveagift/view/widgets/gift_card.dart';
 
-class ReadyCard extends StatelessWidget {
+class ReadyCard extends StatefulWidget {
   const ReadyCard({
     super.key,
     required this.card,
@@ -13,13 +13,20 @@ class ReadyCard extends StatelessWidget {
   final CardData card;
 
   @override
+  State<ReadyCard> createState() => _ReadyCardState();
+}
+
+class _ReadyCardState extends State<ReadyCard> with AutomaticKeepAliveClientMixin {
+  
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final GestureFlipCardController controller = GestureFlipCardController();
     return SizedBox(
-      width: 300,
+      width: MediaQuery.of(context).size.width > 600 ? 400 : 300,
       child: Card(
-        // elevation: 0,
-        elevation: 3,
+        elevation: 5,
+        shadowColor: Colors.grey.shade200,
         color: Colors.white,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
@@ -35,8 +42,8 @@ class ReadyCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: GiftCard(
                   controller: controller,
-                  frontBackgroundImage: card.cardFront,
-                  backBackgroundImage: card.cardBack,
+                  frontBackgroundImage: widget.card.cardFront,
+                  backBackgroundImage: widget.card.cardBack,
                   color: Colors.grey.shade200,
                 ),
               ),
@@ -55,7 +62,7 @@ class ReadyCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${card.price}',
+                      widget.card.price,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 18,
@@ -71,26 +78,7 @@ class ReadyCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Container(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: card.logoImage,
-                        width: 50,
-                        height: 50,
-                        errorWidget: (context, url, error) {
-                          return const Center(
-                            child: Icon(
-                              Icons.storefront_outlined,
-                              color: Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
-                    )
+                    BrandImage(logoImage: widget.card.logoImage)
                   ],
                 )
               ],
@@ -101,4 +89,7 @@ class ReadyCard extends StatelessWidget {
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }
