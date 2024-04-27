@@ -14,7 +14,7 @@ class GiftCard extends StatefulWidget {
     this.showOnly,
     this.frontBackgroundImage,
     this.backBackgroundImage,
-    this.color = Colors.white,
+    this.color,
     this.aspectRatio = 4/3,
 
   });
@@ -24,7 +24,7 @@ class GiftCard extends StatefulWidget {
   final String? frontBackgroundImage;
   final String? backBackgroundImage;
   final double aspectRatio;
-  final Color color;
+  final Color? color;
 
   @override
   State<GiftCard> createState() => _GiftCardState();

@@ -1,5 +1,6 @@
 import 'package:dot_navigation_bar/dot_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:giveagift/constants/enums.dart';
 import 'package:giveagift/view/cards/cards.dart';
 import 'package:giveagift/view/home/home.dart';
@@ -33,7 +34,7 @@ class _AppNavigationState extends State<AppNavigation> {
       extendBodyBehindAppBar: true,
       extendBody: true, 
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width > 600 ? 20 : 10),
         child: DotNavigationBar(
           curve: Curves.fastLinearToSlowEaseIn,
           marginR: EdgeInsets.symmetric(vertical: 0, horizontal: MediaQuery.of(context).size.width > 600 ? 150 : 50),
@@ -42,12 +43,14 @@ class _AppNavigationState extends State<AppNavigation> {
           itemPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
           enablePaddingAnimation: false,
           enableFloatingNavBar: true,
-          backgroundColor: Colors.white,
-          selectedItemColor: Colors.yellow,
           borderRadius: 50,
+          backgroundColor: Get.isDarkMode
+            ? Colors.black
+            : Colors.white,
           currentIndex: Pages.values.indexOf(_selectedTab),
-          dotIndicatorColor: Colors.white,
-          unselectedItemColor: Colors.grey[300],
+          dotIndicatorColor: Colors.transparent,
+          unselectedItemColor: Colors.grey,
+          selectedItemColor: Get.isDarkMode ? Colors.white : Colors.black,
           splashBorderRadius: 50,
           onTap: _handleIndexChanged,
           items: [
@@ -59,7 +62,6 @@ class _AppNavigationState extends State<AppNavigation> {
                   Text('Home'),
                 ],
               ),
-              selectedColor: const Color(0xff73544C),
             ),
 
             /// Cards 
@@ -71,7 +73,6 @@ class _AppNavigationState extends State<AppNavigation> {
                   Text('Cards')
                 ],
               ),
-              selectedColor: const Color(0xff73544C),
             ),
 
             /// Stores
@@ -82,7 +83,6 @@ class _AppNavigationState extends State<AppNavigation> {
                 Text('Store'),
                 ],
               ),
-              selectedColor: const Color(0xff73544C),
             ),
 
             /// Settings
@@ -93,7 +93,6 @@ class _AppNavigationState extends State<AppNavigation> {
                   Text('Settings'),
                 ],
               ),
-              selectedColor: const Color(0xff73544C),
             ),
           ],
         ),

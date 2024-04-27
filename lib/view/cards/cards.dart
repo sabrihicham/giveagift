@@ -43,11 +43,15 @@ class _CardsPageState extends State<CardsPage> {
             },
             padding: MediaQuery.of(context).viewPadding.top,
             decoration: BoxDecoration(
-              color: CupertinoColors.lightBackgroundGray,
+              color: Get.isDarkMode 
+              ? Colors.grey[900] 
+              : CupertinoColors.lightBackgroundGray,
               borderRadius: BorderRadius.circular(8),
             ),
             thumbDecoration: BoxDecoration(
-              color: Colors.white,
+              color: Get.isDarkMode
+                ? Colors.grey[700]
+                : Colors.white,
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 BoxShadow(

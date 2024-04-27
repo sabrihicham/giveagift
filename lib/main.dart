@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:giveagift/app_navigation.dart';
 import 'package:giveagift/core/localization/local.dart';
+import 'package:giveagift/core/themes.dart';
 import 'package:giveagift/core/utiles/shared_prefs.dart';
 
 void main() async{
@@ -23,13 +24,13 @@ class GiveAGift extends StatelessWidget {
     return GetMaterialApp(
       translations: MyLocal(),
       locale: locale,
+      themeMode: SharedPrefs.instance.prefs.getBool('isDark') ?? false
+          ? ThemeMode.dark
+          : ThemeMode.light,
       title: 'Give A Gift',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey[200]!),
-        fontFamily: 'Ara Hamah 1982',
-        useMaterial3: true,
-      ),
+      darkTheme: Themes.darkTheme,
+      theme: Themes.lightTheme,
       home: const AppNavigation(),
     );
   }

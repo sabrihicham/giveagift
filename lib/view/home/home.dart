@@ -70,81 +70,94 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
+                    margin: const EdgeInsets.symmetric(vertical: 20),
                     width: double.infinity,
-                    color: Colors.white,
+                    child: Text(
+                      "- Choose What Suits You -",
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          "- Choose What Suits You -",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        GiftCard(
-                          frontBackgroundImage: 'https://giveagift.com.sa/images/home2.png',
-                          backBackgroundImage: "https://i.ibb.co/jJRT8qW/back.png",
-                         color: Colors.grey.shade200, 
-                        ),
-                        // Gift Cards
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Text(
-                            "Gift Cards",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                    child: Builder(
+                      builder: (context) {
+                        Widget layoutbuilder({required List<Widget> children}) 
+                        {
+                          return LayoutBuilder(
+                            builder: (context, constraints) {
+                              if (constraints.maxWidth > 600) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: children,
+                                );
+                              }
+                              return Column(
+                                children: children,
+                              );
+                            },
+                          );
+                        }
+
+                        return layoutbuilder(
+                          children: [
+                            Column(
+                              children: [
+                                GiftCard(
+                                  frontBackgroundImage: 'https://giveagift.com.sa/images/home2.png',
+                                  backBackgroundImage: "https://i.ibb.co/jJRT8qW/back.png",
+                                ),
+                                // Gift Cards
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  child: Text(
+                                    "Gift Cards",
+                                    style: Theme.of(context).textTheme.headlineMedium,
+                                  ),
+                                ),
+                                // Choose a gift card from our wide collection
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 0),
+                                  child: Text(
+                                    "Choose a gift card from our wide collection",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
                             ),
-                          ),
-                        ),
-                        // Choose a gift card from our wide collection
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          child: Text(
-                            "Choose a gift card from our wide collection",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        const GiftCard(
-                          frontBackgroundImage: 'https://i.ibb.co/64djgNY/home2.webp',
-                          backBackgroundImage: "https://i.ibb.co/4Rd3jz2/home1-back.png"
-                        ),
-                        // Custom Cards
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Text(
-                            "Custom Cards",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        // Create a custom gift card for your loved ones
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          child: Text(
-                            "Create a custom gift card for your loved ones",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+                            Column(
+                              children: [
+                        
+                                const GiftCard(
+                                  frontBackgroundImage: 'https://i.ibb.co/64djgNY/home2.webp',
+                                  backBackgroundImage: "https://i.ibb.co/4Rd3jz2/home1-back.png"
+                                ),
+                                // Custom Cards
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  child: Text(
+                                    "Custom Cards",
+                                    style: Theme.of(context).textTheme.headlineMedium,
+                                  ),
+                                ),
+                                // Create a custom gift card for your loved ones
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 0),
+                                  child: Text(
+                                    "Create a custom gift card for your loved ones",
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            )
+                          ],
+                        );
+                      }
                     ),
                   ),
                 ],
@@ -196,7 +209,6 @@ class HomePage extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Container(
-            color: Colors.white,
             height: MediaQuery.of(context).padding.bottom,
           ),
         )

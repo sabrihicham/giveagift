@@ -28,7 +28,6 @@ class ReadyToUsePage extends StatelessWidget {
               child: Text(
                 'بطاقات جاهزة لك',
                 style: TextStyle(
-                  color: Color.fromRGBO(65, 84, 123, 1),
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -44,7 +43,9 @@ class ReadyToUsePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Get.isDarkMode
+                      ? Colors.grey[800]
+                      : Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: InkWell(
@@ -65,7 +66,6 @@ class ReadyToUsePage extends StatelessWidget {
                         Text(
                           'filter',
                           style: TextStyle(
-                            color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -73,7 +73,6 @@ class ReadyToUsePage extends StatelessWidget {
                         SizedBox(width: 5),
                         Icon(
                           Icons.filter_alt_outlined,
-                          color: Colors.black,
                         ),
                       ],
                     ),
@@ -161,14 +160,21 @@ class ReadyToUsePage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Error loading data'),
+                          Text(
+                            'Error loading data',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
                           const SizedBox(height: 10),
                           CupertinoButton(
-                            color: Color.fromRGBO(65, 84, 123, 1),
+                            // color: Color.fromRGBO(65, 84, 123, 1),
+                            // color: Theme.of(context).primaryColor,
                             onPressed: () {
                               controller.readyCardsSourceRepository.refresh();
                             },
-                            child: const Text('Retry'),
+                            child: Text(
+                              'Retry',
+                              style: Theme.of(context).textTheme.bodyLarge
+                            ),
                           ),
                         ],
                       ),
@@ -231,13 +237,9 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
               ),
             ),
           ),
-          const Text(
+          Text(
             'Filter by price',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headline6,
           ),
           const SizedBox(height: 10),
           Column(
@@ -248,11 +250,7 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
                 child: Text(
                   'Price',
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               RangeSlider(
@@ -265,21 +263,18 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
                   });
                 },
                 divisions: 4,
+                activeColor: Theme.of(context).primaryColor,
                 labels: RangeLabels(
                   widget.controller.priceRange.start.toString(),
                   widget.controller.priceRange.end.toString(),
                 )
               ),
-              const SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: Text(
                   'Stores',
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               Wrap(
@@ -309,7 +304,9 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
               decoration: BoxDecoration(
-                color: Colors.grey[200],
+                color: Get.isDarkMode
+                  ? Colors.grey[800]
+                  : Colors.grey[200],
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey[300]!),
               ),
@@ -318,7 +315,10 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
                   widget.controller.readyCardsSourceRepository.refresh();
                   Navigator.pop(context);
                 },
-                child: const Text('Apply'),
+                child: Text(
+                  'Apply',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             ),
           ),

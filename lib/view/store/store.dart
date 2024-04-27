@@ -80,14 +80,15 @@ class _StoreState extends State<Store> with WidgetsBindingObserver {
                   ),
                   itemBuilder: (context, index) {
                     return Card(
-                      color: Colors.white,
                       surfaceTintColor: Colors.transparent,
                       elevation: 5,
                       child: Column(
                         children: [
                           BrandImage(
                             logoImage: controller.stores[controller.page]!.elementAt(index).logoImage,
-                            size: 100,
+                            size: MediaQuery.of(context).size.width > 600 
+                              ? 200
+                              : 100,
                           ),
                           Text(
                             controller.stores[controller.page]!.elementAt(index).logoName,
