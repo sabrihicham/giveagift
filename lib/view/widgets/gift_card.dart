@@ -34,9 +34,8 @@ class _GiftCardState extends State<GiftCard> {
   @override
   Widget build(BuildContext context) {
 
-    final front = Container(
+    final front = SizedBox(
       width: double.infinity,
-      color: widget.color,
       child: CachedNetworkImage(
           imageUrl: widget.frontBackgroundImage ?? "",
           fit: BoxFit.fill,
@@ -44,9 +43,8 @@ class _GiftCardState extends State<GiftCard> {
         )
       );
 
-    final back = Container(
+    final back = SizedBox(
       width: double.infinity,
-      color: widget.color,
       child: CachedNetworkImage(
           imageUrl: widget.backBackgroundImage ?? "",
           fit: BoxFit.fill,
@@ -62,7 +60,7 @@ class _GiftCardState extends State<GiftCard> {
         controller: widget.controller,
         enableController: widget.controller != null,
         frontWidget: front,
-        backWidget: back
+        backWidget: back,
         );
     }
     
@@ -72,6 +70,7 @@ class _GiftCardState extends State<GiftCard> {
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
+        color: widget.color,
       ),
       child: widget.showOnly == null 
         ? flipCard 

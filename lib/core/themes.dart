@@ -9,7 +9,7 @@ class Themes {
       thumbColor: MaterialStateProperty.all(Colors.white),
       trackColor: MaterialStateProperty.all(Colors.grey.shade300),
     ),
-    primaryColor: Colors.brown,
+    primaryColor: Colors.red,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color.fromRGBO(20, 21, 76, 1),
       elevation: 0,
@@ -28,9 +28,9 @@ class Themes {
     ),
     switchTheme: SwitchThemeData(
       thumbColor: MaterialStateProperty.all(Colors.white),
-      trackColor: MaterialStateProperty.all(Colors.black87),
+      trackColor: MaterialStateProperty.all(Colors.grey.shade800),
     ),
-    primaryColor: Colors.brown,
+    primaryColor: Colors.red,
     appBarTheme: const AppBarTheme(
       backgroundColor: Color.fromRGBO(20, 21, 76, 1),
       elevation: 0,

@@ -94,10 +94,8 @@ class _CustomCardPageState extends State<CustomCardPage> {
           children: [
             Text(
               (widget.controller.customSubmissionState as SubmissionError).exception?.message ?? 'حدث خطأ ما',
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: Colors.red
               ),
             ),
             const SizedBox(height: 10),
@@ -105,14 +103,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
               onPressed: () {
                 widget.controller.fetchCustomCards();
               },
-              color: Colors.blue,
-              child: const Text(
-                'إعادة المحاولة',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Text(
+                'retry'.tr,
+                style: Theme.of(context).textTheme.bodyLarge
               ),
             ),
           ],
@@ -122,12 +115,18 @@ class _CustomCardPageState extends State<CustomCardPage> {
     
     switch (step) {
       case CustomCardStep.color:
-        return CustomColorChooser(
-          onColorSelected: (c) {
-            setState(() {
-              color = c;
-            });
-          },
+        return ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxHeight: 200,
+            maxWidth: 500,
+          ),
+          child: CustomColorChooser(
+            onColorSelected: (c) {
+              setState(() {
+                color = c;
+              });
+            },
+          ),
         );
       case CustomCardStep.shape:
         final shapes = widget.controller.customCardsResponse!.shapes;
@@ -155,7 +154,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   height: MediaQuery.of(context).size.width > 600 ? 230 : 180,
                   margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Get.isDarkMode
+                      ? Colors.grey[900]!
+                      : Colors.grey[200],
                     border: shape == backgroundImage
                       ? Border.all(
                           color: Colors.blue,
@@ -234,7 +235,7 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Get.isDarkMode ? Colors.grey[300] : Colors.grey[200],
                       shape: BoxShape.circle,
                     ),
                     child: GestureDetector(
@@ -260,7 +261,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
             const Text(
               'الرسالة',
               style: TextStyle(
-                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -276,6 +276,12 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   placeholder: 'الرسالة',
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   maxLines: 6,
+                  style: TextStyle(
+                    color: Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                    fontSize: 16,
+                  ),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(60),
                   ],
@@ -285,7 +291,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     });
                   },
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Get.isDarkMode
+                      ? Colors.grey[900]!
+                      : Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),  
                 ),
@@ -355,7 +363,20 @@ class _CustomCardPageState extends State<CustomCardPage> {
                                       _fontFamily = family;
                                     });
                                   },
-                                  child: Text(family),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox.shrink(),
+                                      Text(family),
+                                      if(family == _fontFamily)
+                                        const Icon(
+                                          Icons.check,
+                                          color: Colors.blue,
+                                        )
+                                      else
+                                        const SizedBox.shrink(),
+                                    ],
+                                  ),
                                 ),
                             ],
                           ),
@@ -369,7 +390,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
             const Text(
               'السعر',
               style: TextStyle(
-                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -387,13 +407,21 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     placeholder: 'السعر',
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     maxLines: 1,
+                    style: TextStyle(
+                      color: Get.isDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                      fontSize: 16,
+                    ),
                     // fit Container height with parent
                     suffix: Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
                         'SAR',
                         style: TextStyle(
-                          color: Colors.grey[400],
+                          color: Get.isDarkMode
+                            ? Colors.grey[400]
+                            : Colors.grey[600],
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
@@ -409,7 +437,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
                       });
                     },
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Get.isDarkMode
+                        ? Colors.grey[900]!
+                        : Colors.grey[200],
                       borderRadius: BorderRadius.circular(10),
                     ),  
                   ),
@@ -441,11 +471,19 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   placeholder: 'اسم المستلم',
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   maxLines: 1,
+                  style: TextStyle(
+                    color: Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                    fontSize: 16,
+                  ),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(20),
                   ],
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Get.isDarkMode
+                      ? Colors.grey[900]!
+                      : Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),  
                 ),
@@ -462,12 +500,20 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   placeholder: 'رقم الجوال',
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   maxLines: 1,
+                  style: TextStyle(
+                    color: Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                    fontSize: 16,
+                  ),
                   prefix: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       '+966',
                       style: TextStyle(
-                        color: Colors.grey[400],
+                        color: Get.isDarkMode
+                          ? Colors.grey[400]
+                          : Colors.grey[600],
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -477,7 +523,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     LengthLimitingTextInputFormatter(10),
                   ],
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Get.isDarkMode
+                      ? Colors.grey[900]!
+                      : Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),  
                 ),

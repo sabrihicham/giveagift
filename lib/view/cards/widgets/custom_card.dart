@@ -30,6 +30,7 @@ class CustomCard extends StatefulWidget {
 
 class _CustomCardState extends State<CustomCard> {
 
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -50,16 +51,18 @@ class _CustomCardState extends State<CustomCard> {
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
                   alignment: Alignment.topRight,
-                  child: FittedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: BrandImage(
-                        logoImage: widget.brandImage!,
-                        fit: BoxFit.fill,
-                      ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.5),
+                      shape: BoxShape.circle,
+                    ),
+                    child: BrandImage(
+                      logoImage: widget.brandImage!,
+                      fit: BoxFit.contain,
+                      margin: EdgeInsets.zero,
+                      size: MediaQuery.of(context).size.width > 600
+                        ? 80
+                        : 60,
                     ),
                   ),
                 ),

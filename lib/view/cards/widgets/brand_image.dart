@@ -6,18 +6,20 @@ class BrandImage extends StatelessWidget {
     super.key,
     required this.logoImage,
     this.size = 50,
+    this.margin = const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
     this.fit,
   });
 
   final String logoImage;
   final double? size;
+  final EdgeInsets margin;
   final BoxFit? fit;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      margin: margin,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
