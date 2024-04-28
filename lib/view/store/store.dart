@@ -85,7 +85,7 @@ class _StoreState extends State<Store> with WidgetsBindingObserver {
                       child: Column(
                         children: [
                           BrandImage(
-                            logoImage: controller.stores[controller.page]!.elementAt(index).logoImage,
+                            logoImage: controller.stores[controller.page]!.elementAt(index).logoImage ?? "",
                             size: MediaQuery.of(context).size.width > 600 
                               ? 200
                               : 100,
@@ -107,7 +107,7 @@ class _StoreState extends State<Store> with WidgetsBindingObserver {
                       ),
                     );
                   },
-                  itemCount: 10,
+                  itemCount: controller.stores[controller.page]?.length ?? 0,
                 );
               }
             ),
@@ -119,7 +119,7 @@ class _StoreState extends State<Store> with WidgetsBindingObserver {
               child: NumberPaginator(
                 numberPages: controller.response?.totalPages ?? 1,
                 onPageChange: (int index) {
-                  controller.page = index;
+                  controller.page = index + 1;
                   controller.fetchStore();
                 },  
               ),

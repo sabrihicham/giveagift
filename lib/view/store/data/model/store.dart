@@ -21,10 +21,10 @@ class StoreModelResponse {
 class StoreModel {
   String id;
   String logoName;
-  String logoImage;
+  String? logoImage;
   String brandDescription;
-  String logoWithoutBackground;
-  String brandUrl;
+  String? logoWithoutBackground;
+  String? brandUrl;
   int v;
 
   StoreModel({
