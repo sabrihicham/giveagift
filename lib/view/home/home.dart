@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:giveagift/view/cart/cart.dart';
 import 'package:giveagift/view/widgets/gift_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -104,7 +105,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                GiftCard(
+                                const GiftCard(
                                   frontBackgroundImage: 'https://giveagift.com.sa/images/home2.png',
                                   backBackgroundImage: "https://i.ibb.co/jJRT8qW/back.png",
                                 ),
@@ -195,7 +196,14 @@ class HomePage extends StatelessWidget {
                   backgroundColor: Colors.redAccent,
                   offset: const Offset(-5, 5),
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (context) => const CartPage(),
+                        ),
+                      );
+                    },
                     icon: const Icon(
                       Icons.shopping_bag_rounded,
                       size: 30,
