@@ -83,7 +83,6 @@ class CardsController extends CustomController {
     customSubmissionState = state;
     update(ids);
   }
-
 }
 
 class ReadyCardsSourceRepository extends LoadingMoreBase<CardData> {

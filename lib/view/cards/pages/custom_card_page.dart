@@ -273,7 +273,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   maxWidth: 500,
                 ),
                 child: CupertinoTextField(
-                  placeholder: 'الرسالة',
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   maxLines: 6,
                   style: TextStyle(
@@ -404,7 +403,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     maxWidth: 500,
                   ),
                   child: CupertinoTextField(
-                    placeholder: 'السعر',
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     maxLines: 1,
                     style: TextStyle(
@@ -520,6 +518,7 @@ class _CustomCardPageState extends State<CustomCardPage> {
                     ),
                   ),
                   inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(10),
                   ],
                   decoration: BoxDecoration(

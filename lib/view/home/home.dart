@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:giveagift/core/classes/submission_state.dart';
 import 'package:giveagift/view/cart/cart.dart';
+import 'package:giveagift/view/cart/controller/cart_controller.dart';
 import 'package:giveagift/view/widgets/gift_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
@@ -11,6 +14,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.find<CartController>();
+
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
@@ -190,26 +195,46 @@ class HomePage extends StatelessWidget {
               // forceElevated: false,
               // snap: true,
               actions: [
-                Badge(
-                  label: const Text('1'),
-                  isLabelVisible: true,
-                  backgroundColor: Colors.redAccent,
-                  offset: const Offset(-5, 5),
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => const CartPage(),
-                        ),
+                GetBuilder(
+                  init: cartController,
+                  didChangeDependencies: (controller) {
+                    if(controller.controller?.submissionState is SubmissionError) {
+                      Get.snackbar(
+                        'Error',
+                        (controller.controller!.submissionState as SubmissionError).exception?.message ?? 'An error occurred',
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
                       );
-                    },
-                    icon: const Icon(
-                      Icons.shopping_bag_rounded,
-                      size: 30,
-                    ),
-                    color: Colors.white,
-                  ),
+                    }
+                  },
+                  builder: (controller) {
+                    return Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Badge(
+                        label: Text(
+                          '${cartController.customCarts.length + cartController.carts.length}',
+                        ),
+                        isLabelVisible: true,
+                        backgroundColor: Colors.redAccent,
+                        offset: const Offset(-5, 5),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => const CartPage(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.shopping_bag_rounded,
+                            size: 30,
+                          ),
+                          color: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
                 )
               ],
             ),

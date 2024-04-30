@@ -9,9 +9,11 @@ class ReadyCard extends StatefulWidget {
   const ReadyCard({
     super.key,
     required this.card,
+    required this.onAddTap,
   });
 
   final CardData card;
+  final void Function() onAddTap;
 
   @override
   State<ReadyCard> createState() => _ReadyCardState();
@@ -49,9 +51,7 @@ class _ReadyCardState extends State<ReadyCard> with AutomaticKeepAliveClientMixi
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  onPressed: () {
-      
-                  }, 
+                  onPressed: widget.onAddTap, 
                   icon: const Icon(
                     Icons.add_rounded,
                   ) 

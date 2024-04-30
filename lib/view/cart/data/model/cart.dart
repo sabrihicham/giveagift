@@ -1,29 +1,30 @@
-/*
-{
-    "items": [
-        {
-            "cardFront": "https://i.imgur.com/1coH92P.jpg",
-            "cardBack": "https://i.imgur.com/avoLpp3.jpg",
-            "logoImage": "https://i.imgur.com/LbLvTY2.png",
-            "price": 300,
-            "brand": "ELCT",
-            "receiverInfo": {
-                "phone": "556646053",
-                "name": "sarga"
-            },
-            "ready": true,
-            "uniqueCode": "3e6bfb6624be",
-            "codeUsed": false,
-            "isCustom": false,
-            "isPaid": false,
-            "status": "active",
-            "_id": "65c481a1e756c948e74358f2"
-        }
-    ],
-    "_id": "662be9cea092630c118c7899",
-    "__v": 0
+import 'package:giveagift/models/reciver_info.dart';
+import 'package:giveagift/view/cards/data/models/custom_cards.dart';
+
+class CustomCart {
+  final String id;
+  final List<CustomCardData> items;
+
+  CustomCart({
+    required this.id,
+    required this.items,
+  });
+
+  factory CustomCart.fromJson(Map<String, dynamic> json) {
+    return CustomCart(
+      id: json['_id'],
+      items: List<CustomCardData>.from(json['items'].map((x) => CustomCardData.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'items': items.map((e) => e.toJson()).toList(),
+    };
+  }
+
 }
-*/
 
 class Cart {
   final String id;
@@ -113,30 +114,6 @@ class CartItem {
       'isCustom': isCustom,
       'isPaid': isPaid,
       'status': status,
-    };
-  }
-}
-
-class ReceiverInfo {
-  final String phone;
-  final String name;
-
-  ReceiverInfo({
-    required this.phone,
-    required this.name,
-  });
-
-  factory ReceiverInfo.fromJson(Map<String, dynamic> json) {
-    return ReceiverInfo(
-      phone: json['phone'],
-      name: json['name'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'phone': phone,
-      'name': name,
     };
   }
 }

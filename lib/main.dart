@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:giveagift/app_navigation.dart';
 import 'package:giveagift/core/localization/local.dart';
 import 'package:giveagift/core/themes.dart';
 import 'package:giveagift/core/utiles/shared_prefs.dart';
+import 'package:giveagift/view/cart/controller/cart_controller.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,9 @@ class GiveAGift extends StatelessWidget {
           : ThemeMode.light,
       title: 'Give A Gift',
       debugShowCheckedModeBanner: false,
+      initialBinding: BindingsBuilder(() {
+        Get.put(CartController());
+      }),
       darkTheme: Themes.darkTheme,
       theme: Themes.lightTheme,
       home: const AppNavigation(),

@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:giveagift/models/reciver_info.dart';
 import 'package:giveagift/view/cards/controller/cards_controller.dart';
 import 'package:giveagift/view/cards/data/models/ready_card.dart';
 import 'package:giveagift/view/cards/widgets/ready_card.dart';
+import 'package:giveagift/view/cart/controller/cart_controller.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 
 class ReadyToUsePage extends StatelessWidget {
@@ -16,6 +19,7 @@ class ReadyToUsePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
     return GetBuilder<CardsController>(
       init: controller,
       id: CardType.readyToUse.name,
@@ -104,6 +108,210 @@ class ReadyToUsePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ReadyCard(
                       card: item,
+                      onAddTap: () {
+                        // show floating bottom sheet request reciver info
+                        showBottomSheet(
+                          context: context,
+                          // isDismissible: false,
+                          // showDragHandle: true,
+                          enableDrag: false,
+                          elevation: 10,
+                          constraints: BoxConstraints(
+                            maxWidth: MediaQuery.of(context).size.width > 600
+                              ? 400
+                              : MediaQuery.of(context).size.width * 0.9,
+                          ),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20),
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (context) {
+                            final phoneController = TextEditingController();
+                            final nameController = TextEditingController();
+                            
+                            final message = ValueNotifier('');
+
+                            return TapRegion(
+                              onTapOutside: (event) {
+                                if(Navigator.canPop(context)) {
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Get.isDarkMode
+                                    ? Colors.grey[900]
+                                    : Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(
+                                      width: double.infinity,
+                                      height: 100,
+                                      child: Center(
+                                        child: Text(
+                                          'بيانات المستلم',
+                                          style: TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      )
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                      child: ConstrainedBox(
+                                        constraints: const BoxConstraints(
+                                          maxHeight: 50,
+                                          maxWidth: 500,
+                                        ),
+                                        child: CupertinoTextField(
+                                          placeholder: 'الاسم',
+                                          controller: nameController,
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            color: Get.isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Get.isDarkMode
+                                              ? Colors.grey[800]
+                                              : Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                      child: ConstrainedBox(
+                                        constraints: const BoxConstraints(
+                                          maxHeight: 50,
+                                          maxWidth: 500,
+                                        ),
+                                        child: CupertinoTextField(
+                                          placeholder: 'رقم الجوال',
+                                          controller: phoneController,
+                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            color: Get.isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
+                                            fontSize: 16,
+                                          ),
+                                          prefix: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            child: Text(
+                                              '+966',
+                                              style: TextStyle(
+                                                color: Get.isDarkMode
+                                                  ? Colors.grey[400]
+                                                  : Colors.grey[600],
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          inputFormatters: [
+                                            FilteringTextInputFormatter.digitsOnly,
+                                            LengthLimitingTextInputFormatter(9),
+                                          ],
+                                          decoration: BoxDecoration(
+                                            color: Get.isDarkMode
+                                              ? Colors.grey[800]
+                                              : Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),  
+                                        ),
+                                      ),
+                                    ),
+                                    // error message
+                                    ValueListenableBuilder<String>(
+                                      valueListenable: message,
+                                      builder: (context, value, child) {
+                                        return Container(
+                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          child: Text(
+                                            value,
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    ),
+                                    const SizedBox(height: 20),
+                                    SafeArea(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                        decoration: BoxDecoration(
+                                          color: Get.isDarkMode
+                                            ? Colors.grey[800]
+                                            : Colors.grey[200],
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(color: Colors.grey[300]!),
+                                        ),
+                                        child: InkWell(
+                                          onTap: () {
+                                            if (phoneController.text.isEmpty || nameController.text.isEmpty) {
+                                                message.value = 'الرجاء إدخال البيانات';
+                                              return;
+                                              
+                                            } else if (!phoneController.text.startsWith('6') && !phoneController.text.startsWith('5')) {
+                                              message.value = 'رقم الجوال يجب أن يبدأ بـ 5 أو 6';
+                                              return;
+                                            } else if (phoneController.text.length < 9) {
+                                              message.value = 'رقم الجوال يجب أن يكون 9 أرقام';
+                                              return;
+                                            } else {
+                                              message.value = '';
+                                            }
+
+                                            // send request to server
+                                            cartController.addReadyCardToCart(
+                                              item,
+                                              ReceiverInfo(
+                                                phone: phoneController.text, 
+                                                name: nameController.text
+                                              )
+                                            );
+                                            
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text(
+                                            'إرسال',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        );
+                      },
                     ),
                   );
                 },
