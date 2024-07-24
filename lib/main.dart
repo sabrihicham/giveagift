@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:giveagift/app_navigation.dart';
 import 'package:giveagift/core/localization/local.dart';
@@ -6,20 +7,21 @@ import 'package:giveagift/core/themes.dart';
 import 'package:giveagift/core/utiles/shared_prefs.dart';
 import 'package:giveagift/view/cart/controller/cart_controller.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPrefs.initialize();
+  await dotenv.load(fileName: ".env");
   runApp(const GiveAGift());
 }
 
 class GiveAGift extends StatelessWidget {
   const GiveAGift({super.key});
   final locales = const {'en': Locale('en'), 'ar': Locale('ar')};
-
+  
   Locale get locale => SharedPrefs.instance.prefs.containsKey('lang')
       ? locales[SharedPrefs.instance.prefs.getString('lang')]!
       : locales['ar']!;
-
+  
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -35,7 +37,9 @@ class GiveAGift extends StatelessWidget {
       }),
       darkTheme: Themes.darkTheme,
       theme: Themes.lightTheme,
-      home: const AppNavigation(),
+      home: AppNavigation(
+        key: appNavigationKey,
+      ),
     );
   }
 }

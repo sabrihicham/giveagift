@@ -49,7 +49,7 @@ class CartSource {
     }
   }
 
-  Future<String> removeReadyCardFromCart(int cartId) async {
+  Future<String> removeReadyCardFromCart(String cartId) async {
     final response = await http.delete(
       Uri.http(
         API.BASE_URL, '/api/CartRemove/remove/$cartId/true',

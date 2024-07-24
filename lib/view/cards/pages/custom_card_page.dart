@@ -31,7 +31,16 @@ class CustomCardPage extends StatefulWidget {
 
 class _CustomCardPageState extends State<CustomCardPage> {
   Color? color;
-  String? backgroundImage, brandImage, message,  price;
+  String? backgroundImage, brandImage;
+
+  final validationMessage = ValueNotifier('');
+
+  TextEditingController message = TextEditingController(), 
+                        price = TextEditingController(), 
+                        phone = TextEditingController(),
+                        reciverName = TextEditingController(),
+                        reciverPhone = TextEditingController();
+
   CustomCardStep currentStep = CustomCardStep.color;
   CardSide cardSide = CardSide.front;
 
@@ -70,6 +79,20 @@ class _CustomCardPageState extends State<CustomCardPage> {
       fontWeight: FontWeight.w400,
     ),
   };
+
+  void onStepForward() {
+    if(currentStep == CustomCardStep.messageAndPrice) {
+      if(price.value.text.isEmpty) {
+        validationMessage.value = 'empty_price'.tr;
+        return;
+      } else if(int.parse(price.value.text) < 10 || int.parse(price.value.text) > 10000 ) {
+        validationMessage.value = 'price_invalid_range'.tr;
+        return;
+      }
+    }
+
+    onStepChanged(CustomCardStep.values[currentStep.index + 1]);
+  }
 
   void onStepChanged(CustomCardStep step) {
     setState(() {
@@ -258,9 +281,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
       case CustomCardStep.messageAndPrice:
         return Column(
           children: [
-            const Text(
-              'الرسالة',
-              style: TextStyle(
+            Text(
+              'message'.tr,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -275,20 +298,17 @@ class _CustomCardPageState extends State<CustomCardPage> {
                 child: CupertinoTextField(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   maxLines: 6,
+                  controller: message,
                   style: TextStyle(
                     color: Get.isDarkMode
                       ? Colors.white
                       : Colors.black,
                     fontSize: 16,
                   ),
+                  onChanged: (value) => setState(() {}),
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(60),
                   ],
-                  onChanged: (value) {
-                    setState(() {
-                      message = value;
-                    });
-                  },
                   decoration: BoxDecoration(
                     color: Get.isDarkMode
                       ? Colors.grey[900]!
@@ -362,18 +382,18 @@ class _CustomCardPageState extends State<CustomCardPage> {
                                       _fontFamily = family;
                                     });
                                   },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  child: Stack(
+                                    alignment: Alignment.center,
                                     children: [
-                                      const SizedBox.shrink(),
-                                      Text(family),
                                       if(family == _fontFamily)
-                                        const Icon(
-                                          Icons.check,
-                                          color: Colors.blue,
-                                        )
-                                      else
-                                        const SizedBox.shrink(),
+                                        const Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Icon(
+                                            Icons.check,
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                      Text(family),
                                     ],
                                   ),
                                 ),
@@ -386,9 +406,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
               ],
             ),
             const SizedBox(height: 10),
-            const Text(
-              'السعر',
-              style: TextStyle(
+            Text(
+              'price'.tr,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -405,12 +425,14 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   child: CupertinoTextField(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     maxLines: 1,
+                    controller: price,
                     style: TextStyle(
                       color: Get.isDarkMode
                         ? Colors.white
                         : Colors.black,
                       fontSize: 16,
                     ),
+                    onChanged: (value) => setState(() {}),
                     // fit Container height with parent
                     suffix: Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -429,11 +451,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(5),
                     ],
-                    onChanged: (value) {
-                      setState(() {
-                        price = value;
-                      });
-                    },
                     decoration: BoxDecoration(
                       color: Get.isDarkMode
                         ? Colors.grey[900]!
@@ -443,6 +460,23 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   ),
                 ),
               ),
+            ),
+            // TODO: apply validation message
+            // error message
+            ValueListenableBuilder<String>(
+              valueListenable: validationMessage,
+              builder: (context, value, child) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                      color: Colors.red,
+                      fontSize: 14,
+                    ),
+                  ),
+                );
+              }
             ),
           ],
         );
@@ -466,9 +500,10 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   maxWidth: 500,
                 ),
                 child: CupertinoTextField(
-                  placeholder: 'اسم المستلم',
+                  placeholder: 'receiver_name'.tr,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   maxLines: 1,
+                  controller: reciverName,
                   style: TextStyle(
                     color: Get.isDarkMode
                       ? Colors.white
@@ -495,9 +530,10 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   maxWidth: 500,
                 ),
                 child: CupertinoTextField(
-                  placeholder: 'رقم الجوال',
+                  placeholder: 'phone_number'.tr,
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   maxLines: 1,
+                  controller: reciverPhone,
                   style: TextStyle(
                     color: Get.isDarkMode
                       ? Colors.white
@@ -537,9 +573,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
                 // TODO: submit custom card
               },
               color: Colors.blue,
-              child: const Text(
-                'إرسال',
-                style: TextStyle(
+              child: Text(
+                'add_to_cart'.tr,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -554,15 +590,15 @@ class _CustomCardPageState extends State<CustomCardPage> {
   String getStepTitle(CustomCardStep step) {
     switch (step) {
       case CustomCardStep.color:
-        return 'اختر لون البطاقة';
+        return 'color_step_title'.tr;
       case CustomCardStep.shape:
-        return 'اختر شكل البطاقة';
+        return 'shape_step_title'.tr;
       case CustomCardStep.store:
-        return 'اختر المتجر';
+        return 'store_step_title'.tr;
       case CustomCardStep.messageAndPrice:
-        return 'املآ الرسالة والسعر';
+        return 'message_and_price_step_title'.tr;
       case CustomCardStep.reciverInfo:
-        return 'معلومات المستلم';
+        return 'reciver_info_step_title'.tr;
     }
   }
 
@@ -583,8 +619,8 @@ class _CustomCardPageState extends State<CustomCardPage> {
               textStyle: selectedStyle.copyWith(
                 fontFamily: fontFamily,
               ),
-              message: message,
-              price: price,
+              message: message.text,
+              price: price.text,
               showOnly: cardSide,
             ),
           ),
@@ -623,7 +659,7 @@ class _CustomCardPageState extends State<CustomCardPage> {
                   // borderThickness: 10,
                   internalPadding: 0,
                   showLoadingAnimation: false,
-                  onStepReached: (index) => setState(() => currentStep = CustomCardStep.values[index]),
+                  onStepReached: (index) => setState(() => onStepChanged(CustomCardStep.values[index])),
                   steps: [
                     for(final step in CustomCardStep.values)
                       EasyStep(
@@ -672,7 +708,7 @@ class _CustomCardPageState extends State<CustomCardPage> {
                           if(currentStep != CustomCardStep.reciverInfo)
                             IconButton(
                               onPressed: () {
-                                onStepChanged(CustomCardStep.values[currentStep.index + 1]);
+                                onStepForward();
                               },
                               icon: Icon(
                                 Icons.adaptive.arrow_forward_rounded,

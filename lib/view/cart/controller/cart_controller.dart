@@ -88,20 +88,12 @@ class CartController extends CustomController {
     }
   }
 
-  void removeReadyCardFromCart(int cartId) async {
+  void removeReadyCardFromCart(String cartId) async {
     setState(Submitting());
     try {
       await cartRepository.removeReadyCardFromCart(cartId);
 
-      List<String>? carts = SharedPrefs.instance.prefs.getStringList('carts');
-
-      if(carts != null) {
-        List<Cart> cartList = carts.map((e) => Cart.fromJson(jsonDecode(e))).toList();
-
-        cartList.removeWhere((element) => element.id == cartId.toString());
-
-        SharedPrefs.instance.prefs.setStringList('carts', cartList.map((e) => jsonEncode(e)).toList());
-      }
+      removeReadyCardFromLocalCart(cartId);
 
       setState(SubmissionSuccess());
     } catch (e) {
@@ -112,4 +104,17 @@ class CartController extends CustomController {
       setState(SubmissionError(CustomException('An error occurred while removing from cart.')));
     }
   }
+
+  void removeReadyCardFromLocalCart(String cartId) {
+    List<String>? carts = SharedPrefs.instance.prefs.getStringList('carts');
+
+    if(carts != null) {
+      List<Cart> cartList = carts.map((e) => Cart.fromJson(jsonDecode(e))).toList();
+
+      cartList.removeWhere((element) => element.id == cartId);
+
+      SharedPrefs.instance.prefs.setStringList('carts', cartList.map((e) => jsonEncode(e)).toList());
+    }
+  }
+
 }

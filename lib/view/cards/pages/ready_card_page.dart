@@ -7,6 +7,7 @@ import 'package:giveagift/view/cards/controller/cards_controller.dart';
 import 'package:giveagift/view/cards/data/models/ready_card.dart';
 import 'package:giveagift/view/cards/widgets/ready_card.dart';
 import 'package:giveagift/view/cart/controller/cart_controller.dart';
+import 'package:giveagift/view/widgets/global_text_field.dart';
 import 'package:loading_more_list/loading_more_list.dart';
 
 class ReadyToUsePage extends StatelessWidget {
@@ -25,13 +26,13 @@ class ReadyToUsePage extends StatelessWidget {
       id: CardType.readyToUse.name,
       builder: (controller) => Column(
         children: [
-          const SizedBox(
+          SizedBox(
             width: double.infinity,
             height: 100,
             child: Center(
               child: Text(
-                'بطاقات جاهزة لك',
-                style: TextStyle(
+                'cards_title_msg'.tr,
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -65,17 +66,17 @@ class ReadyToUsePage extends StatelessWidget {
                         }
                       );
                     },
-                    child: const Row(
+                    child: Row(
                       children: [
                         Text(
-                          'filter',
-                          style: TextStyle(
+                          'filter'.tr,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 5),
-                        Icon(
+                        const SizedBox(width: 5),
+                        const Icon(
                           Icons.filter_alt_outlined,
                         ),
                       ],
@@ -152,13 +153,13 @@ class ReadyToUsePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    const SizedBox(
+                                    SizedBox(
                                       width: double.infinity,
                                       height: 100,
                                       child: Center(
                                         child: Text(
-                                          'بيانات المستلم',
-                                          style: TextStyle(
+                                          'reciver_info'.tr,
+                                          style: const TextStyle(
                                             fontSize: 28,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -166,77 +167,31 @@ class ReadyToUsePage extends StatelessWidget {
                                       )
                                     ),
                                     const SizedBox(height: 20),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                      child: ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          maxHeight: 50,
-                                          maxWidth: 500,
-                                        ),
-                                        child: CupertinoTextField(
-                                          placeholder: 'الاسم',
-                                          controller: nameController,
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            color: Get.isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
-                                            fontSize: 16,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Get.isDarkMode
-                                              ? Colors.grey[800]
-                                              : Colors.grey[200],
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                      ),
+                                    GlobalTextField(
+                                      controller: nameController,
+                                      placeholder: 'name'.tr,
                                     ),
                                     const SizedBox(height: 20),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                      child: ConstrainedBox(
-                                        constraints: const BoxConstraints(
-                                          maxHeight: 50,
-                                          maxWidth: 500,
-                                        ),
-                                        child: CupertinoTextField(
-                                          placeholder: 'رقم الجوال',
-                                          controller: phoneController,
-                                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                          maxLines: 1,
+                                    GlobalTextField(
+                                      controller: phoneController,
+                                      placeholder: 'phone_number'.tr,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(9),
+                                      ],
+                                      prefix: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          '+966',
                                           style: TextStyle(
                                             color: Get.isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
-                                            fontSize: 16,
+                                              ? Colors.grey[400]
+                                              : Colors.grey[600],
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          prefix: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                                            child: Text(
-                                              '+966',
-                                              style: TextStyle(
-                                                color: Get.isDarkMode
-                                                  ? Colors.grey[400]
-                                                  : Colors.grey[600],
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          inputFormatters: [
-                                            FilteringTextInputFormatter.digitsOnly,
-                                            LengthLimitingTextInputFormatter(9),
-                                          ],
-                                          decoration: BoxDecoration(
-                                            color: Get.isDarkMode
-                                              ? Colors.grey[800]
-                                              : Colors.grey[200],
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),  
                                         ),
-                                      ),
+                                      )
                                     ),
                                     // error message
                                     ValueListenableBuilder<String>(
@@ -291,10 +246,32 @@ class ReadyToUsePage extends StatelessWidget {
                                             );
                                             
                                             Navigator.pop(context);
+
+                                            // Show Success Snack Bar
+                                            Get.snackbar(
+                                              'success'.tr,
+                                              'card_added_to_cart'.tr,
+                                              snackPosition: SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.green,
+                                              colorText: Colors.white,
+                                              duration: const Duration(seconds: 3),
+                                              margin: const EdgeInsets.all(10),
+                                              borderRadius: 10,
+                                              isDismissible: true,
+                                              dismissDirection: DismissDirection.endToStart,
+                                              forwardAnimationCurve: Curves.easeOutBack,
+                                              reverseAnimationCurve: Curves.easeInBack,
+                                              animationDuration: const Duration(milliseconds: 800),
+                                              snackStyle: SnackStyle.FLOATING,
+                                              icon: const Icon(
+                                                Icons.check_circle_outline,
+                                                color: Colors.white,
+                                              ),
+                                            );
                                           },
-                                          child: const Text(
-                                            'إرسال',
-                                            style: TextStyle(
+                                          child: Text(
+                                            'add_to_cart'.tr,
+                                            style: const TextStyle(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -446,7 +423,7 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
             ),
           ),
           Text(
-            'Filter by price',
+            'filter'.tr,
             style: Theme.of(context).textTheme.headline6,
           ),
           const SizedBox(height: 10),
@@ -456,7 +433,7 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Price',
+                  'price'.tr,
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -480,7 +457,7 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
               SizedBox(
                 width: double.infinity,
                 child: Text(
-                  'Stores',
+                  'stores'.tr,
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -524,7 +501,7 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
                   Navigator.pop(context);
                 },
                 child: Text(
-                  'Apply',
+                  'apply'.tr,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),

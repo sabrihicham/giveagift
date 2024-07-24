@@ -7,6 +7,8 @@ import 'package:giveagift/view/cards/controller/cards_controller.dart';
 import 'package:giveagift/view/cards/pages/custom_card_page.dart';
 import 'package:giveagift/view/cards/pages/ready_card_page.dart';
 
+GlobalKey<CardsPageState> cardsPageKey = GlobalKey<CardsPageState>();
+
 class CardsPage extends StatefulWidget {
   const CardsPage({
     super.key,
@@ -16,10 +18,10 @@ class CardsPage extends StatefulWidget {
   final CardType initialTab;
 
   @override
-  State<CardsPage> createState() => _CardsPageState();
+  State<CardsPage> createState() => CardsPageState();
 }
 
-class _CardsPageState extends State<CardsPage> {
+class CardsPageState extends State<CardsPage> {
   final controller = Get.put(CardsController());
   late CardType _selectedTab;
 
@@ -27,6 +29,12 @@ class _CardsPageState extends State<CardsPage> {
   void initState() {
     _selectedTab = widget.initialTab;
     super.initState();
+  }
+
+  void changeTab(CardType type) {
+    setState(() {
+      _selectedTab = type;
+    });
   }
 
   @override
@@ -37,11 +45,15 @@ class _CardsPageState extends State<CardsPage> {
         children: [
           CustomSlidingSegmentedControl<CardType>(
             initialValue: _selectedTab,
-            children: const <CardType, Widget>{
-              CardType.readyToUse: Text('Ready to Use'),
-              CardType.custom: Text('Custom'),
+            children: <CardType, Widget> {
+              CardType.readyToUse: Text('ready_to_use'.tr),
+              CardType.custom: Text('custom'.tr),
             },
             padding: MediaQuery.of(context).viewPadding.top,
+            // innerPadding: EdgeInsets.symmetric(
+            //   vertical: 5,
+            //   horizontal: 2,
+            // ),
             decoration: BoxDecoration(
               color: Get.isDarkMode 
               ? Colors.grey[900] 
@@ -55,7 +67,9 @@ class _CardsPageState extends State<CardsPage> {
               borderRadius: BorderRadius.circular(6),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(.3),
+                  color: Get.isDarkMode
+                    ? Colors.grey[900]!
+                    : Colors.grey[300]!,
                   blurRadius: 4.0,
                   spreadRadius: 1.0,
                   offset: const Offset(

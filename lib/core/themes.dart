@@ -11,10 +11,8 @@ class Themes {
     ),
     primaryColor: Colors.red,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromRGBO(20, 21, 76, 1),
+      // backgroundColor: Color.fromRGBO(20, 21, 76, 1),
       elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white),
     ),
     scaffoldBackgroundColor: Colors.white,
     iconTheme: const IconThemeData(
@@ -32,10 +30,8 @@ class Themes {
     ),
     primaryColor: Colors.red,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromRGBO(20, 21, 76, 1),
+      // backgroundColor: Color.fromRGBO(20, 21, 76, 1),
       elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white),
     ),
     scaffoldBackgroundColor: Colors.black45,
     iconTheme: const IconThemeData(

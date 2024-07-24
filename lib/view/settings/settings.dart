@@ -24,7 +24,8 @@ class _SettingspageState extends State<Settingspage> with WidgetsBindingObserver
 
   @override
   Widget build(BuildContext context) {
-      return Column(
+      return Scaffold(
+        body: Column(
           children: [
             Expanded(
               child: ListView(
@@ -47,8 +48,9 @@ class _SettingspageState extends State<Settingspage> with WidgetsBindingObserver
                 ],
               ),
             ),
-           
+            
           ],
-        );
+        ),
+      );
   }
 }

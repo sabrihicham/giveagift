@@ -17,7 +17,7 @@ class CartRepository {
     return await cartSource.addCustomCardToCart(customCard);
   }
 
-  Future<String> removeReadyCardFromCart(int cartId) async {
+  Future<String> removeReadyCardFromCart(String cartId) async {
     return await cartSource.removeReadyCardFromCart(cartId);
   }
 }

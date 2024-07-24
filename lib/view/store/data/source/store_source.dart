@@ -12,6 +12,7 @@ class StoreSource {
         API.BASE_URL, '/stores',
         {
           'page': page.toString(),
+          'limit': "100"
         }
       ),
     );
@@ -22,6 +23,4 @@ class StoreSource {
       throw CustomException.fromStatus(response.statusCode) ??  CustomException('An error occurred while fetching custom cards.');
     }
   }
-
-
 }

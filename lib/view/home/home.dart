@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:giveagift/app_navigation.dart';
+import 'package:giveagift/constants/enums.dart';
 import 'package:giveagift/core/classes/submission_state.dart';
-import 'package:giveagift/view/cart/cart.dart';
+import 'package:giveagift/view/cards/cards.dart';
+import 'package:giveagift/view/cards/controller/cards_controller.dart';
 import 'package:giveagift/view/cart/controller/cart_controller.dart';
 import 'package:giveagift/view/widgets/gift_card.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -17,7 +20,7 @@ class HomePage extends StatelessWidget {
     final cartController = Get.find<CartController>();
 
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       slivers: [
         SliverStack(
           children: [
@@ -33,7 +36,7 @@ class HomePage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Container(
+                    child: Container( 
                       color: Colors.black.withOpacity(0.4),
                       padding: EdgeInsets.symmetric(
                         horizontal: MediaQuery.of(context).size.width * (0.1),
@@ -48,22 +51,22 @@ class HomePage extends StatelessWidget {
                             color:  Color.fromRGBO(182, 32, 38, 0.75),
                             shape: BoxShape.rectangle,
                           ),
-                          child: const Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                'Give Choice Give A Gift',
+                                'home_body'.tr,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 28,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "When Gifting Becomes Persona",
+                                "home_desc".tr,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -76,96 +79,136 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 20),
-                    width: double.infinity,
-                    child: Text(
-                      "- Choose What Suits You -",
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.displaySmall,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/home_bg_2.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: Builder(
-                      builder: (context) {
-                        Widget layoutbuilder({required List<Widget> children}) 
-                        {
-                          return LayoutBuilder(
-                            builder: (context, constraints) {
-                              if (constraints.maxWidth > 600) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: children,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.25),
+                      child: Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 20),
+                            width: double.infinity,
+                            child: Text(
+                              "- ${"choose_what_suits_you".tr} -",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                                color: Colors.grey[300],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            child: Builder(
+                              builder: (context) {
+                                Widget layoutbuilder({required List<Widget> children}) 
+                                {
+                                  return LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      if (constraints.maxWidth > 600) {
+                                        return Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: children,
+                                        );
+                                      }
+                                      return Column(
+                                        children: children,
+                                      );
+                                    },
+                                  );
+                                }
+                      
+                                return layoutbuilder(
+                                  children: [
+                                    Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            appNavigationKey.currentState?.changeSelectedTab(Pages.cards);
+                                            cardsPageKey.currentState?.changeTab(CardType.readyToUse);
+                                          },
+                                          child: const GiftCard(
+                                            frontBackgroundImage: 'https://giveagift.com.sa/images/home2.png',
+                                            backBackgroundImage: "https://i.ibb.co/jJRT8qW/back.png",
+                                          ),
+                                        ),
+                                        // Gift Cards
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 20),
+                                          child: Text(
+                                            "gift_cards".tr,
+                                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        // Choose a gift card from our wide collection
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 0),
+                                          child: Text(
+                                            "gift_cards_desc".tr,
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            appNavigationKey.currentState?.changeSelectedTab(Pages.cards);
+                                            cardsPageKey.currentState?.changeTab(CardType.custom);
+                                          },
+                                          child: const GiftCard(
+                                            frontBackgroundImage: 'https://i.ibb.co/64djgNY/home2.webp',
+                                            backBackgroundImage: "https://i.ibb.co/4Rd3jz2/home1-back.png"
+                                          ),
+                                        ),
+                                        // Custom Cards
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 20),
+                                          child: Text(
+                                            "custom_cards".tr,
+                                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        // Create a custom gift card for your loved ones
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 0),
+                                          child: Text(
+                                            "custom_cards_desc".tr,
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Container(
+                                          height: MediaQuery.of(context).padding.bottom,
+                                        )
+                                      ],
+                                    )
+                                  ],
                                 );
                               }
-                              return Column(
-                                children: children,
-                              );
-                            },
-                          );
-                        }
-
-                        return layoutbuilder(
-                          children: [
-                            Column(
-                              children: [
-                                const GiftCard(
-                                  frontBackgroundImage: 'https://giveagift.com.sa/images/home2.png',
-                                  backBackgroundImage: "https://i.ibb.co/jJRT8qW/back.png",
-                                ),
-                                // Gift Cards
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
-                                  child: Text(
-                                    "Gift Cards",
-                                    style: Theme.of(context).textTheme.headlineMedium,
-                                  ),
-                                ),
-                                // Choose a gift card from our wide collection
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 0),
-                                  child: Text(
-                                    "Choose a gift card from our wide collection",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
                             ),
-                            Column(
-                              children: [
-                        
-                                const GiftCard(
-                                  frontBackgroundImage: 'https://i.ibb.co/64djgNY/home2.webp',
-                                  backBackgroundImage: "https://i.ibb.co/4Rd3jz2/home1-back.png"
-                                ),
-                                // Custom Cards
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 20),
-                                  child: Text(
-                                    "Custom Cards",
-                                    style: Theme.of(context).textTheme.headlineMedium,
-                                  ),
-                                ),
-                                // Create a custom gift card for your loved ones
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 0),
-                                  child: Text(
-                                    "Create a custom gift card for your loved ones",
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.titleLarge,
-                                  ),
-                                ),
-                                const SizedBox(height: 20),
-                              ],
-                            )
-                          ],
-                        );
-                      }
-                    ),
-                  ),
+                          ),
+                        ],
+                      ),
+                    )
+                  )
                 ],
               )
             ),
@@ -219,12 +262,7 @@ class HomePage extends StatelessWidget {
                         offset: const Offset(-5, 5),
                         child: IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context, 
-                              MaterialPageRoute(
-                                builder: (context) => const CartPage(),
-                              ),
-                            );
+                            appNavigationKey.currentState?.changeSelectedTab(Pages.cart);
                           },
                           icon: const Icon(
                             Icons.shopping_bag_rounded,
@@ -240,11 +278,6 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        SliverToBoxAdapter(
-          child: Container(
-            height: MediaQuery.of(context).padding.bottom,
-          ),
-        )
       ],
     );
   }
