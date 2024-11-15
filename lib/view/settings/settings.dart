@@ -1,6 +1,7 @@
 import 'package:giveagift/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import 'widget/settings_widgets.dart';
 
@@ -25,27 +26,37 @@ class _SettingspageState extends State<Settingspage> with WidgetsBindingObserver
   @override
   Widget build(BuildContext context) {
       return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+        ),
         body: Column(
           children: [
             Expanded(
-              child: ListView(
-                children: [
-                  const DarkModeSwitch(),
-                  const LanguageSelector(),
-                  const Divider(),
-                  const AboutApp(),
-                  const Privacy(),
-                  const FeedBack(),
-                  const Divider(),
-                  // App version
-                  ListTile(
-                    title: Text('version'.tr, style: const TextStyle(fontSize: 18)),
-                    trailing: Text(
-                      appVersion,
-                      style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
-                    )
-                  )
-                ],
+              child: FutureBuilder(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, snapshot) {
+                  return ListView(
+                    children: [
+                      const DarkModeSwitch(),
+                      const LanguageSelector(),
+                      const Divider(),
+                      AboutApp(
+                        version: snapshot.data?.version
+                      ),
+                      const Privacy(),
+                      const FeedBack(),
+                      const Divider(),
+                      // App version
+                      ListTile(
+                        title: Text('version'.tr, style: const TextStyle(fontSize: 18)),
+                        trailing: Text(
+                          snapshot.data?.version ?? '',
+                          style: TextStyle(fontSize: 18, color: Theme.of(context).primaryColor),
+                        )
+                      )
+                    ],
+                  );
+                }
               ),
             ),
             

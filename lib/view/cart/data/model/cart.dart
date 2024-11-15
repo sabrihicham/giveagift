@@ -1,26 +1,25 @@
 import 'package:giveagift/models/reciver_info.dart';
-import 'package:giveagift/view/cards/data/models/custom_cards.dart';
 
 class CustomCart {
   final String id;
-  final List<CustomCardData> items;
+  // final List<CustomCardData> items;
 
   CustomCart({
     required this.id,
-    required this.items,
+    // required this.items,
   });
 
   factory CustomCart.fromJson(Map<String, dynamic> json) {
     return CustomCart(
       id: json['_id'],
-      items: List<CustomCardData>.from(json['items'].map((x) => CustomCardData.fromJson(x))),
+      // items: List<CustomCardData>.from(json['items'].map((x) => CustomCardData.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
-      'items': items.map((e) => e.toJson()).toList(),
+      // 'items': items.map((e) => e.toJson()).toList(),
     };
   }
 

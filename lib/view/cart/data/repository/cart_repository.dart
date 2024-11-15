@@ -1,7 +1,4 @@
-import 'package:giveagift/models/reciver_info.dart';
-import 'package:giveagift/view/cards/data/models/custom_cards.dart';
-import 'package:giveagift/view/cards/data/models/ready_card.dart';
-import 'package:giveagift/view/cart/data/model/cart.dart';
+import 'package:giveagift/view/cart/data/model/card.dart';
 import 'package:giveagift/view/cart/data/source/cart_source.dart';
 
 class CartRepository {
@@ -9,15 +6,27 @@ class CartRepository {
 
   CartRepository(this.cartSource);
 
-  Future<Cart> addReadyCardToCart(CardData card, ReceiverInfo receiverInfo) async {
-    return await cartSource.addReadyCardToCart(card, receiverInfo);
+  Future<GetCardsResponse> getCards() async {
+    return await cartSource.getCards();
   }
 
-  Future<CustomCart> addCustomCardToCart(CustomCardData customCard) async {
-    return await cartSource.addCustomCardToCart(customCard);
+  Future<GetCardResponse> getCard(String cardId) async {
+    return await cartSource.getCard(cardId);
   }
 
-  Future<String> removeReadyCardFromCart(String cartId) async {
-    return await cartSource.removeReadyCardFromCart(cartId);
+  Future<CreateCardResponse> addSpecialCardToCart(String shopId, num price, {String? recipientName, String? recipientNumber, DateTime? receiveAt}) async {
+    return await cartSource.addSpecialCardToCart(shopId, price, recipientName, recipientNumber, receiveAt);
+  }
+
+  Future<CreateCardResponse> addCustomCardToCart(CreateCardData card) async {
+    return await cartSource.addCustomCardToCart(card);
+  }
+
+  Future<bool> removeCardFromCart(String cartId) async {
+    return await cartSource.removeCardFromCart(cartId);
+  }
+
+  Future<CreateCardResponse> updateCard(CreateCardData card) async {
+    return await cartSource.updateCard(card);
   }
 }

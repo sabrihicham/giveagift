@@ -1,12 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Card;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:giveagift/constants/api.dart';
+import 'package:giveagift/view/cart/model/execute_payment.dart';
 import 'package:giveagift/view/payment/payment_screen_status.dart';
 import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
+
+import 'package:giveagift/core/classes/custom_client.dart' as client;
+import 'package:url_launcher/url_launcher_string.dart';
 
 final String mAPIKey = dotenv.get("PAYMENT_API_KEY");
 
@@ -151,13 +156,48 @@ class _PaymentScreenState extends State<PaymentScreen> {
     }
   }
 
-  executePayment() {
+  executePayment() async {
     if (selectedPaymentMethodIndex == -1) {
       setState(() {
         response = "Please select payment method first";
       });
     } else {
-      executeRegularPayment(paymentMethods[selectedPaymentMethodIndex].paymentMethodId!);
+      if (Platform.isIOS) {
+        final response = await client.post(
+            Uri.parse("${API.BASE_URL}api/v1/payments/execute-payment"),
+            body: ExecutePaymentRequest(
+              paymentMethodId: paymentMethods[selectedPaymentMethodIndex].paymentMethodId!,
+              invoiceValue: widget.totalAmount,
+              type: PaymentType.PAYMENT,
+              errorURL: "https://example.com/success",
+              successURL: "https://example.com/error",
+            )
+          );
+
+          if (response.statusCode == 200) {
+            
+            final executePayment = ExecutePaymentResponse.fromJson(json.decode(response.body)).data;
+
+            bool isLaunched = await launchUrlString(
+              executePayment!.data.paymentURL,
+            );
+            
+            if (!isLaunched) {
+              Get.showSnackbar(
+                const GetSnackBar(
+                  message: 'Failed to open the payment page',
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          }
+
+
+
+          return;
+      } else {
+        executeRegularPayment(paymentMethods[selectedPaymentMethodIndex].paymentMethodId!);
+      }
     }
   }
 

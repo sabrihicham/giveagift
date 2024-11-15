@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AboutApp extends StatelessWidget {
+  final String? version;
+
   const AboutApp({
     super.key,
+    this.version
   });
 
   @override
@@ -15,8 +18,8 @@ class AboutApp extends StatelessWidget {
       onTap: () => showAboutDialog(
         context: context,
         applicationName: appName,
-        applicationVersion: appVersion,
-        applicationLegalese: '©2023',
+        applicationVersion: version ?? '',
+        applicationLegalese: '©2024',
         children: [
           Text('about_app_message'.tr),
         ]

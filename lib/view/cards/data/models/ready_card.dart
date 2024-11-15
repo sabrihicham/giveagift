@@ -1,107 +1,157 @@
+import 'dart:math';
+
+import 'package:giveagift/view/cards/data/models/shape.dart';
+import 'package:giveagift/view/cart/data/model/card.dart';
+import 'package:giveagift/view/store/data/model/shop.dart';
+
 class ReadyCardsResponse {
   ReadyCardsResponse({
+    required this.status,
     required this.data,
-    required this.totalPages,
-    required this.currentPage,
+    this.totalPages = 1,
   });
 
-  final List<CardData> data;
+  final String status;
+  final Data data;
   final int totalPages;
-  final int currentPage;
 
-  factory ReadyCardsResponse.fromJson(Map<String, dynamic> json) {
-    return ReadyCardsResponse(
-      data: List<CardData>.from(json['data'].map((x) => CardData.fromJson(x))),
-      totalPages: json['totalPages'],
-      currentPage: json['currentPage'] is String
-        ? int.parse(json['currentPage'])
-        : json['currentPage'],
-    );
+  factory ReadyCardsResponse.fromJson(Map<String, dynamic> json) =>
+      ReadyCardsResponse(
+        status: json["status"],
+        data: Data.fromJson(json["data"]),
+        totalPages: json["totalPages"] ?? 1,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": status,
+        "data": data.toJson(),
+        "totalPages": totalPages,
+      };
+}
+
+class Data {
+  Data({
+    required this.cards,
+    required String frontShape,
+    required String backShape,
+  }) {
+    _frontShape = frontShape;
+    _backShape = backShape;
   }
+
+  late String _frontShape;
+  late String _backShape;
+  final List<CardData> cards;
+
+  String get frontShape {
+    return _frontShape.startsWith('/')
+        ? _frontShape.replaceFirst('/', '')
+        : _frontShape;
+  }
+
+  String get backShape {
+    return _backShape.startsWith('/')
+        ? _backShape.replaceFirst('/', '')
+        : _backShape;
+  }
+
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
+        cards:
+            List<CardData>.from(json["cards"].map((x) => CardData.fromJson(x))),
+        frontShape: json["frontShapeImagePath"],
+        backShape: json["backShapeImagePath"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "cards": List<dynamic>.from(cards.map((x) => x.toJson())),
+        "frontShapeImagePath": _frontShape,
+        "backShapeImagePath": _backShape,
+      };
 }
 
 class CardData {
   CardData({
     required this.id,
-    required this.cardFront,
-    required this.cardBack,
-    required this.logoImage,
+    required this.shop,
     required this.price,
-    required this.brand,
+    this.frontShape,
+    this.backShape,
+    this.priority,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
   });
 
   final String id;
-  final String cardFront;
-  final String cardBack;
-  final String logoImage;
-  final String price;
-  final String? brand;
+  final Shop? shop;
+  final int price;
+  String? frontShape;
+  String? backShape;
+  num? priority;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
 
-  factory CardData.fromJson(Map<String, dynamic> json) {
-    return CardData(
-      id: json['_id'],
-      cardFront: json['cardFront'],
-      cardBack: json['cardBack'],
-      logoImage: json['logoImage'],
-      price: json['price'],
-      brand: json['brand'],
+  factory CardData.fromJson(Map<String, dynamic> json) => CardData(
+        id: json["_id"],
+        shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
+        price: json["price"],
+        priority: json["priority"],
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]).toLocal(),
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]).toLocal(),
+        v: json["__v"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "shop": shop?.toJson(),
+        "price": price,
+        "priority": priority,
+        "createdAt": createdAt?.toUtc().toIso8601String(),
+        "updatedAt": updatedAt?.toUtc().toIso8601String(),
+        "__v": v,
+      };
+
+  // TODO: check frontShape and backShape
+  Card toCard() {
+    return Card(
+      id: id,
+      price: Price(value: price),
+      shop: shop,
+      isSpecial: true,
+      priority: priority,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'cardFront': cardFront,
-      'cardBack': cardBack,
-      'logoImage': logoImage,
-      'price': price,
-      'brand': brand,
-    };
-  }
-
-  CardData copyWith({
-    String? id,
-    String? cardFront,
-    String? cardBack,
-    String? logoImage,
-    String? price,
-    String? brand,
-  }) {
-    return CardData(
-      id: id ?? this.id,
-      cardFront: cardFront ?? this.cardFront,
-      cardBack: cardBack ?? this.cardBack,
-      logoImage: logoImage ?? this.logoImage,
-      price: price ?? this.price,
-      brand: brand ?? this.brand,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-  
-    return other is CardData &&
-      other.id == id &&
-      other.cardFront == cardFront &&
-      other.cardBack == cardBack &&
-      other.logoImage == logoImage &&
-      other.price == price &&
-      other.brand == brand;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-      cardFront.hashCode ^
-      cardBack.hashCode ^
-      logoImage.hashCode ^
-      price.hashCode ^
-      brand.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'CardData(id: $id, cardFront: $cardFront, cardBack: $cardBack, logoImage: $logoImage, price: $price, brand: $brand)';
   }
 }
+
+// class Shop {
+//   final String id;
+//   final String name;
+//   final String logo;
+//   final String description;
+//   final String? link;
+// }
+
+const responseMock = {
+  "status": "success",
+  "results": 0,
+  "data": {
+    "frontShapeImagePath": "/specialCards/front-shape.webp",
+    "backShapeImagePath": "/specialCards/back-shape.webp",
+    "cards": [
+      {
+        "_id": "61f1b1b1b1b1b1b1b1b1b1b1",
+        "shop": {
+          "_id": "61f1b1b1b1b1b1b1b1b1b1",
+          "name": "Elect",
+          "logo":
+              "/shops/shop-91288cd9-95b4-4c03-9c61-686355c2ca18-1719608972865.png"
+        },
+        "price": 100,
+        "createdAt": "2022-01-01T00:00:00.000Z",
+        "updatedAt": "2022-01-01T00:00:00.000Z",
+        "__v": 0
+      },
+    ]
+  }
+};
