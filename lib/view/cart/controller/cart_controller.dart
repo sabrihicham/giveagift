@@ -46,7 +46,6 @@ class CartController extends CustomController {
         );
 
         if(updateCardState is SubmissionSuccess) {
-          // Get.back(result: true);
           // TODO: Look this
           Navigator.pop(Get.context!, true);
         } else if(updateCardState is SubmissionError) {

@@ -112,7 +112,6 @@ class CardData {
         "__v": v,
       };
 
-  // TODO: check frontShape and backShape
   Card toCard() {
     return Card(
       id: id,

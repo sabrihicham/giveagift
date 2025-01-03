@@ -378,9 +378,6 @@ class _ReadyCardFilterState extends State<ReadyCardFilter> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      // TODO: Filter cards from source
-                      // widget.controller.readyCardsSourceRepository.refresh();
-
                       widget.controller.filterReadyCardsLocaly();
 
                       Navigator.pop(context);

@@ -397,31 +397,10 @@ class _CustomCardPageState extends State<CustomCardPage> {
                           horizontal: 10,
                         ),
                         decoration: BoxDecoration(
-                          // color: _color?.color ??
-                          //     (Get.isDarkMode
-                          //         ? Colors.grey[900]!
-                          //         : Colors.grey[200]),
-
-                          // TODO: show selected Items
-                          // border: _shapes?.keys.map((e) => e.shape).contains(shape) == true
-                          //     ? Border.all(
-                          //         color: Colors.blue,
-                          //         width: 2,
-                          //       )
-                          //     : null,
-
-                          // Border.all(
-                          //   color: Colors.grey,
-                          //   width: 1,
-                          // ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: InkWell(
                           onTap: () {
-                            // if (shape.price != null && shape.price! > 0) {
-                            //   _alertProItem('${'pro_shape_info'.tr} ${shape.price} ${'sar'.tr}');
-                            // }
-
                             _shapes ??= {};
                             final initScale = 0.3;
 
@@ -785,25 +764,6 @@ class _CustomCardPageState extends State<CustomCardPage> {
                                   pickedColor = color;
                                 },
                               ),
-                              // Use Material color picker:
-                              //
-                              // child: MaterialPicker(
-                              //   pickerColor: pickerColor,
-                              //   onColorChanged: changeColor,
-                              //   showLabel: true, // only on portrait mode
-                              // ),
-                              //
-                              // Use Block color picker:
-                              //
-                              // child: BlockPicker(
-                              //   pickerColor: currentColor,
-                              //   onColorChanged: changeColor,
-                              // ),
-                              //
-                              // child: MultipleChoiceBlockPicker(
-                              //   pickerColors: currentColors,
-                              //   onColorsChanged: changeColors,
-                              // ),
                             ),
                             actions: <Widget>[
                               ElevatedButton(
@@ -866,55 +826,14 @@ class _CustomCardPageState extends State<CustomCardPage> {
                           ],
                         ),
                       )
-                      // CupertinoTextField(
-                      //   padding: const EdgeInsets.symmetric(
-                      //     horizontal: 10,
-                      //     vertical: 10,
-                      //   ),
-                      //   maxLines: 1,
-                      //   controller: price,
-                      //   keyboardType: TextInputType.number,
-                      //   style: TextStyle(
-                      //     color: Get.isDarkMode ? Colors.white : Colors.black,
-                      //     fontSize: 16,
-                      //   ),
-                      //   onChanged: (value) => setState(() {}),
-                      //   // fit Container height with parent
-                      //   textInputAction: TextInputAction.next,
-                      //   // suffix: Padding(
-                      //   //   padding: const EdgeInsets.only(left: 10),
-                      //   //   child: Text(
-                      //   //     'SAR',
-                      //   //     style: TextStyle(
-                      //   //       color: Get.isDarkMode
-                      //   //           ? Colors.grey[400]
-                      //   //           : Colors.grey[600],
-                      //   //       fontSize: 18,
-                      //   //       fontWeight: FontWeight.bold,
-                      //   //     ),
-                      //   //   ),
-                      //   // ),
-                      //   inputFormatters: [
-                      //     FilteringTextInputFormatter.digitsOnly,
-                      //     LengthLimitingTextInputFormatter(5),
-                      //   ],
-                      //   decoration: BoxDecoration(
-                      //     color: Get.isDarkMode
-                      //         ? Colors.grey[900]!
-                      //         : Colors.grey[200],
-                      //     borderRadius: BorderRadius.circular(10),
-                      //   ),
-                      // ),
-                      ),
+                    ),
                 ),
-                // TODO: apply validation message
                 // error message
                 ValueListenableBuilder<String>(
                     valueListenable: validationMessage,
                     builder: (context, value, child) {
                       return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         child: Text(
                           value,
                           style: const TextStyle(

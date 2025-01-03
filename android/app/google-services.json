@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "790652083145",
+    "project_id": "giveagive-4d914",
+    "storage_bucket": "giveagive-4d914.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790652083145:android:d8738fd62ee5a34ebc2618",
+        "android_client_info": {
+          "package_name": "com.dido.giveagift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8qCTRMXdwc9iDTTSZpjfcaBtBLHxP4y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:790652083145:android:cc96d3941ab77b0cbc2618",
+        "android_client_info": {
+          "package_name": "com.ghaith.giveagift"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8qCTRMXdwc9iDTTSZpjfcaBtBLHxP4y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

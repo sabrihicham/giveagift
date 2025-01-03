@@ -323,7 +323,6 @@ class AppNavigationState extends State<AppNavigation> {
                           padding: EdgeInsets.zero,
                           onPressed: () {
                             changeSelectedTab(Pages.explore);
-                            // TODO: cardsPageKey.currentState?.changeTab(CardType.readyToUse);
                           },
                           child: Column(
                             mainAxisSize: MainAxisSize.min,

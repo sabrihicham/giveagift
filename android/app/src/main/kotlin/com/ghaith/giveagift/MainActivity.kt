@@ -1,4 +1,4 @@
-package com.example.giveagift
+package com.ghaith.giveagift
 
 import io.flutter.embedding.android.FlutterActivity
 

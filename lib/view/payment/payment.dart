@@ -62,7 +62,7 @@ class _PaymentPageState extends State<PaymentPage> {
       message.value = '';
     }
 
-    if (Platform.isIOS) {
+    if (Platform.isIOS || Platform.isAndroid) {
       String successUrl = "${API.BASE_URL}/payment-success/${widget.card?.id}";
       String errorUrl = "${API.BASE_URL}/payment-faild";
       final response = await client.post(
@@ -266,7 +266,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                               ),
                                             if(controller.paymentMethodsState is SubmissionSuccess)
                                               ...controller.paymentMethods!
-                                                // .where((element) => element.paymentMethodId != selectedMethod?.paymentMethodId)
+                                              .where((element) => Platform.isIOS || Platform.isAndroid && element.paymentMethodId != 11)
                                               .map(
                                                 (e) => DropdownMenuItem(
                                                   value: e,
@@ -286,7 +286,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                                     ],
                                                   ),
                                                 ),
-                                              ).toList(),
+                                              ),
                                           ]
                                         ),
                                       ),

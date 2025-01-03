@@ -53,13 +53,13 @@ class _CardPreviewState extends State<CardPreview> {
       cartController.getCardSetState(const SubmissionSuccess());
 
       if (card?.isPaid == true && card?.celebrateIcon != null) {
-        // TODO: Launch celebration sample
         WidgetsBinding.instance.addPostFrameCallback(
           (timeStamp) {
             Celebrate.instance.celebrate(
-                context,
-                celebrateTypeFromString(card!.celebrateIcon!),
-                MediaQuery.of(context).size.width > 600);
+              context,
+              celebrateTypeFromString(card!.celebrateIcon!),
+              MediaQuery.of(context).size.width > 600,
+            );
           },
         );
       }

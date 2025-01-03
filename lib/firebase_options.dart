@@ -51,10 +51,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD8qCTRMXdwc9iDTTSZpjfcaBtBLHxP4y0',
-    appId: '1:790652083145:android:d8738fd62ee5a34ebc2618',
+    appId: '1:790652083145:android:cc96d3941ab77b0cbc2618',
     messagingSenderId: '790652083145',
     projectId: 'giveagive-4d914',
-    storageBucket: 'giveagive-4d914.appspot.com',
+    storageBucket: 'giveagive-4d914.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -62,7 +62,7 @@ class DefaultFirebaseOptions {
     appId: '1:790652083145:ios:bcfe744090276a1cbc2618',
     messagingSenderId: '790652083145',
     projectId: 'giveagive-4d914',
-    storageBucket: 'giveagive-4d914.appspot.com',
+    storageBucket: 'giveagive-4d914.firebasestorage.app',
     iosBundleId: 'com.ghaith.giveagift',
   );
 

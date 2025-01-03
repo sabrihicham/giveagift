@@ -75,9 +75,6 @@ class Layer extends LayerBase {
 
   @override
   Widget build(BuildContext context, {Widget? child}) {
-    print('scale: $scale');
-    print('rotation: ${rotation}');
-    print('position: $position');
     return LayoutBuilder(
       builder: (context, constraints) {
         toCenter(constraints.maxWidth, constraints.maxHeight);
@@ -101,6 +98,7 @@ class Layer extends LayerBase {
                         maxHeight: height ?? double.infinity,
                       ),
                       decoration: BoxDecoration(
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(30),
                         border: Border.all(
                           color: isSelected.value
