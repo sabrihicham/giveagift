@@ -83,6 +83,7 @@ class InAppWebViewPageState extends State<InAppWebViewPage> {
                 onLoadStart: (InAppWebViewController controller, Uri? url) {
                   if (widget.arguments.successUrl != null && widget.arguments.successUrl!.isNotEmpty && url.toString().contains(widget.arguments.successUrl!)) {
                     Navigator.pop(context, true);
+                    return;
                   } else if (widget.arguments.errorUrl != null && widget.arguments.errorUrl!.isNotEmpty && url.toString().contains(widget.arguments.errorUrl!)) {
                     if (url != null && url.queryParameters.containsKey('paymentId')) {
                       UrlLauncherUtils.launchPaymentResult(

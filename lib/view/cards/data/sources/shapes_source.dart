@@ -13,7 +13,7 @@ class ShapesSourceImpl implements ShapesSource {
   @override
   Future<ShapesResponse> getShapes() async {
     final response = await client.get(
-      Uri.parse('${API.BASE_URL}/api/v1/shapes'),
+      Uri.parse('${API.BASE_URL}/api/v1/shapes?limit=Infinity'),
     );
 
     if (response.statusCode == 200) {

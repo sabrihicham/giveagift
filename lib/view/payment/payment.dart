@@ -134,7 +134,7 @@ class _PaymentPageState extends State<PaymentPage> {
               colorText: Colors.white,
             );
 
-            Get.back(result: true);
+            Navigator.of(context).pop(true);
           } else {
             Get.snackbar(
               'error'.tr,

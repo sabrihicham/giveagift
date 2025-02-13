@@ -93,9 +93,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(6),
-                                  color: const Color.fromRGBO(255, 243, 205, 1),
+                                  color: Theme.of(context).primaryColor.withOpacity(0.7),
                                   border: Border.all(
-                                    color: const Color.fromRGBO(255, 230, 156, 1),
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                                 child: Column(
@@ -103,7 +103,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     Text(
                                       "verify_phone_msg".tr,
                                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                        color: const Color.fromRGBO(102, 77, 3, 1),
+                                        color: Colors.white
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -113,7 +113,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                         // buttton color 255, 193, 7
                                         GlobalButton(
                                           lable: 'send_code'.tr,
-                                          color: const Color.fromRGBO(255, 193, 7, 1),
+                                          color: Theme.of(context).primaryColor,
                                           onTap: () async {
                                             await OverlayUtils.showLoadingOverlay(
                                               text: 'sending_code'.tr,

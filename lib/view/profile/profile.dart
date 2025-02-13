@@ -953,7 +953,7 @@ class NotLogedIn extends StatelessWidget {
                   onLogIn?.call(result);
                 }
               },
-              color: const Color.fromRGBO(253, 60, 132, 1),
+              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(10),
               child: Text('login'.tr,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(

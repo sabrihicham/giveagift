@@ -34,12 +34,15 @@ class CartItem extends StatefulWidget {
 class _CartItemState extends State<CartItem> {
   Color iconsColor = const Color.fromRGBO(106, 126, 140, 1);
 
-  void _onPaySuccess() async {
+  void _onPaySuccess(bool withWallet) async {
     appNavigationKey.currentState?.changeSelectedTab(Pages.profile);
 
     Get.find<CartController>().getCards();
 
-    await Get.to(() => Successful(card: widget.card));
+    await Get.to(() => Successful(
+      card: widget.card,
+      withWallet: withWallet,
+    ));
 
     Get.to(() => const OrdersPage());
   }
@@ -100,12 +103,12 @@ class _CartItemState extends State<CartItem> {
       Get.snackbar(
         success ? "success".tr : "error".tr,
         success
-            ? "payment_success".tr
-            : profileController.buyCardState is SubmissionError
-                ? (profileController.buyCardState as SubmissionError)
-                    .exception
-                    .message
-                : "An error occurred while paying.",
+          ? "payment_success".tr
+          : profileController.buyCardState is SubmissionError
+            ? (profileController.buyCardState as SubmissionError)
+                .exception
+                .message
+            : "An error occurred while paying.",
         backgroundColor: success ? Colors.greenAccent : Colors.redAccent,
       );
     }
@@ -115,7 +118,7 @@ class _CartItemState extends State<CartItem> {
     }
 
     if (success) {
-      _onPaySuccess();
+      _onPaySuccess(!type);
     }
   }
 

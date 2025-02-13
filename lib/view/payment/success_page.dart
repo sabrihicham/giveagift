@@ -10,8 +10,9 @@ import 'package:giveagift/view/profile/controller/profile_controller.dart';
 
 class Successful extends StatelessWidget {
   final Card? card;
+  final bool withWallet;
 
-  const Successful({super.key, this.card});
+  const Successful({super.key, this.card, this.withWallet = true});
 
   String formatDate(DateTime? date) {
     if (date == null) {
@@ -117,78 +118,79 @@ class Successful extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 309.h,
-                  child: Container(
-                    width: 343.w,
-                    padding: EdgeInsets.only(
-                      top: 7.h,
-                      // left: 110.w,
-                      // right: 111.w,
-                      bottom: 6.h,
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFF9F9FB),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            width: 1.w, color: const Color(0xEEEEEEEE)),
-                        borderRadius: BorderRadius.circular(20.r),
+                if(withWallet)
+                  Positioned(
+                    top: 309.h,
+                    child: Container(
+                      width: 343.w,
+                      padding: EdgeInsets.only(
+                        top: 7.h,
+                        // left: 110.w,
+                        // right: 111.w,
+                        bottom: 6.h,
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                child: Text(
-                                  'الرصيد الحالي',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFF9F9FB),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              width: 1.w, color: const Color(0xEEEEEEEE)),
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  child: Text(
+                                    'الرصيد الحالي',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 4.h),
-                              GetBuilder(
-                                init: Get.find<ProfileController>(),
-                                id: 'wallet',
-                                builder: (controller) {
-                                  if (controller.walletState is Submitting) {
-                                    return const SizedBox(
-                                      child:
-                                          CircularProgressIndicator.adaptive(),
-                                    );
-                                  }
+                                SizedBox(height: 4.h),
+                                GetBuilder(
+                                  init: Get.find<ProfileController>(),
+                                  id: 'wallet',
+                                  builder: (controller) {
+                                    if (controller.walletState is Submitting) {
+                                      return const SizedBox(
+                                        child:
+                                            CircularProgressIndicator.adaptive(),
+                                      );
+                                    }
 
-                                  return SizedBox(
-                                    width: double.infinity,
-                                    child: Text(
-                                      "${SharedPrefs.instance.wallet?.balance.toStringAsFixed(2) ?? 0} ${'sar'.tr}",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: const Color(0xFF333333),
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.w700,
+                                    return SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        "${SharedPrefs.instance.wallet?.balance.toStringAsFixed(2) ?? 0} ${'sar'.tr}",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: const Color(0xFF333333),
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.w700,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 Positioned(
                   top: 404.h,
                   child: Container(

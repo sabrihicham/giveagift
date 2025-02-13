@@ -587,7 +587,7 @@ class HomePage extends StatelessWidget {
                                 title: "store_features".tr,
                               ),
                               SizedBox(height: 16.h),
-                              const ShopSpecials(),
+                              ShopSpecials(),
                               SizedBox(height: 16.h),
                               // const Divider(),
                               // Container(

@@ -98,7 +98,7 @@ class Transfer {
         "amount": amount,
         "receiverName": receiverName,
         "receiverPhone": receiverPhone,
-        "createdAt": createdAt.toUtc(),
+        "createdAt": createdAt.toUtc().toIso8601String(),
       };
 
   Transfer copyWith({

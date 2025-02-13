@@ -151,6 +151,8 @@ class _SignupPageState extends State<SignupPage> {
                   child: GlobalTextField2(
                     controller: passwordController,
                     placeHolder: 'password'.tr,
+                    keyboardType: TextInputType.visiblePassword,
+                    obsecure: true,
                     prefix: SvgPicture.asset(
                       'assets/icons/lock.svg',
                       width: 22.53.w,
@@ -166,6 +168,8 @@ class _SignupPageState extends State<SignupPage> {
                   child: GlobalTextField2(
                     controller: confirmPasswordController,
                     placeHolder: 'confirm_password'.tr,
+                    keyboardType: TextInputType.visiblePassword,
+                    obsecure: true,
                     prefix: SvgPicture.asset(
                       'assets/icons/lock.svg',
                       width: 22.53.w,
