@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Card;
@@ -5,6 +7,7 @@ import 'package:flutter_flip_card/flutter_flip_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:giveagift/core/classes/celebrate.dart';
 import 'package:giveagift/core/classes/submission_state.dart';
@@ -122,8 +125,63 @@ class _CardPreviewState extends State<CardPreview> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(
-                height: 9,
+              SizedBox(
+                height: 9.h,
+              ),
+              if(!isFront)
+                if(card!.celebrateQR != null)
+                  Image.memory(
+                    base64Decode(card!.celebrateQR!.split(',').last),
+                    width: 100.w,
+                    height: 100.w,
+                  )
+                else
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'for_you'.tr,
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      FaIcon(
+                        FontAwesomeIcons.gift,
+                        color: Colors.amber,
+                        size: 20.sp,
+                      )
+                    ],
+                  )
+              else
+                if(card!.discountCode?.qrCode != null)
+                  Image.memory(
+                    base64Decode(card!.discountCode!.qrCode!.split(',').last),
+                    width: 100.w,
+                    height: 100.w,
+                  )
+                else if(card!.discountCode?.code != null)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SelectableText(
+                        card!.discountCode!.code!,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 5.w),
+                      FaIcon(
+                        FontAwesomeIcons.gift,
+                        color: Colors.amber,
+                        size: 20.sp,
+                      )
+                    ],
+                  ),
+              SizedBox(
+                height: 9.h,
               ),
               if (card?.isPaid == true)
                 Column(
@@ -324,7 +382,7 @@ class _CardPreviewState extends State<CardPreview> {
                               child: CupertinoButton(
                                 onPressed: () {
                                   if (selectedIndex == 0) {
-                                    setState(() {});
+                                    // setState(() {});
                                     return;
                                   }
 
@@ -363,7 +421,7 @@ class _CardPreviewState extends State<CardPreview> {
                               child: CupertinoButton(
                                 onPressed: () {
                                   if (selectedIndex == 1) {
-                                    setState(() {});
+                                    // setState(() {});
                                     return;
                                   }
 

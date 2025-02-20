@@ -87,27 +87,54 @@ class _JoinUsPageState extends State<JoinUsPage> {
 
           return;
         } else {
-          Get.snackbar(
-            'error'.tr,
-            joinUsResponse.message,
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(joinUsResponse.message),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+              behavior: SnackBarBehavior.floating,
+
+            ),
           );
+          // Get.snackbar(
+          //   'error'.tr,
+          //   joinUsResponse.message,
+          //   backgroundColor: Colors.red,
+          //   colorText: Colors.white,
+          // );
         }
       } else {
-        Get.snackbar(
-          'error'.tr,
-          'something_went_wrong'.tr,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        // Get.snackbar(
+        //   'error'.tr,
+        //   'something_went_wrong'.tr,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('something_went_wrong'.tr),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 3),
+              behavior: SnackBarBehavior.floating,
+              
+            ),
+          );
       }
     } catch (e) {
-      Get.snackbar(
-        'error'.tr,
-        'something_went_wrong'.tr,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
+      // Get.snackbar(
+      //   'error'.tr,
+      //   'something_went_wrong'.tr,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('something_went_wrong'.tr),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+          behavior: SnackBarBehavior.floating,
+          
+        ),
       );
     }
 

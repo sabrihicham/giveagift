@@ -382,13 +382,15 @@ class ExplorePageState extends State<ExplorePage> {
                               );
                             }
 
+                            final homeShops = shopController.shops.values.firstOrNull?.where((store) => store.showInHome ?? false).toList();
+
                             return ListView.builder(
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemCount: shopController.shops.values.firstOrNull?.where((store) => store.showInHome ?? false).length ?? 0,
+                              itemCount: homeShops?.length ?? 0,
                               itemBuilder: (context, index) {
-                                final shop = shopController.shops.values.first.where((store) => store.showInHome ?? false).elementAt(index);
+                                final shop = homeShops![index];
                                 return Padding(
                                   padding: EdgeInsets.only(right: 8.w, left: 8.w),
                                   child: Column(

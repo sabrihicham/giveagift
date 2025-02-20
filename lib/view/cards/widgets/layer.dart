@@ -159,7 +159,7 @@ class TextLayer extends Layer {
     return super.build(
       context,
       child: Text(
-        text.message,
+        text.message ?? '',
         style: TextStyle(
           color: text.fontColorAtr,
           fontSize: text.fontSize?.toDouble() ?? 12,

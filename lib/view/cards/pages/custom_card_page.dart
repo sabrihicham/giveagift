@@ -316,13 +316,8 @@ class _CustomCardPageState extends State<CustomCardPage> {
                 child: Column(
                   children: [
                     Text(
-                      (controller.shapesState as SubmissionError)
-                          .exception
-                          .message,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(color: Colors.red),
+                      (controller.shapesState as SubmissionError).exception.message,
+                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.red),
                     ),
                     const SizedBox(height: 10),
                     CupertinoButton(
@@ -366,11 +361,9 @@ class _CustomCardPageState extends State<CustomCardPage> {
               child: GridView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount:
-                      MediaQuery.of(context).size.width > 600 ? 5 : 3,
+                  crossAxisCount: MediaQuery.of(context).size.width > 600 ? 5 : 3,
                   crossAxisSpacing: 10.w,
                   mainAxisSpacing: 10.w,
                   // childAspectRatio: 16 / 9,

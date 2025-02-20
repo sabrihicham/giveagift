@@ -64,7 +64,7 @@ class Shop {
   factory Shop.fromJson(Map<String, dynamic> json) => Shop(
         id: json["_id"],
         name: json["name"],
-        logo: json["logo"],
+        logo: json["logo"] ?? '',
         description: json["description"] ?? '',
         link: json["link"],
         email: json["email"],

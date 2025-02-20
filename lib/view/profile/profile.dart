@@ -23,7 +23,7 @@ import 'package:giveagift/view/profile/refund_policy.dart';
 import 'package:giveagift/view/profile/support.dart';
 import 'package:giveagift/view/profile/terms_and_conditions.dart';
 import 'package:giveagift/view/profile/update_profile.dart';
-import 'package:giveagift/view/profile/wallet.dart';
+import 'package:giveagift/view/recivedCards/recived_cards_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -154,10 +154,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Column(
                               children: [
                                 GridView(
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 15
+                                    crossAxisCount: 4,
+                                    crossAxisSpacing: 5.w
                                   ),
                                   shrinkWrap: true,
                                   children: [
@@ -183,6 +183,19 @@ class _ProfilePageState extends State<ProfilePage> {
                                       onTap: () {
                                         Get.to(
                                           () => const UpdateProfile(),
+                                          duration: Get.isDarkMode ? 0.seconds : null
+                                        );
+                                      },
+                                    ),
+                                    ProfileContainer(
+                                      icon: FaIcon(
+                                        Icons.credit_score_rounded, size: 36,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      text: 'recived_cards'.tr,
+                                      onTap: () {
+                                        Get.to(
+                                          () => const RecivedCardsPage(),
                                           duration: Get.isDarkMode ? 0.seconds : null
                                         );
                                       },
@@ -852,7 +865,7 @@ class ProfileContainer extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
         color: Get.isDarkMode ? Colors.grey.shade800 :Colors.white,
-        border: Border.all(color: Color.fromRGBO(226, 232, 240, 1)),
+        border: Border.all(color: const Color.fromRGBO(226, 232, 240, 1)),
         borderRadius: BorderRadius.circular(20),
       ),
       child: InkWell(
@@ -864,6 +877,7 @@ class ProfileContainer extends StatelessWidget {
             icon,
             Text(
               text,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 11.sp,
                 fontWeight: FontWeight.w500

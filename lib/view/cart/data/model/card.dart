@@ -422,19 +422,23 @@ class Card {
 class DiscountCode {
   DiscountCode({
     this.isUsed,
+    this.code,
     this.qrCode,
   });
 
   final bool? isUsed;
+  final String? code;
   final String? qrCode;
 
   factory DiscountCode.fromJson(Map<String, dynamic> json) => DiscountCode(
     isUsed: json["isUsed"],
+    code: json["code"],
     qrCode: json["qrCode"],
   );
 
   Map<String, dynamic> toJson() => {
     "isUsed": isUsed,
+    "code": code,
     "qrCode": qrCode,
   };
 }
@@ -502,7 +506,7 @@ class CardText {
     this.yPosition,
   });
 
-  final String message;
+  final String? message;
   final String? fontFamily;
   final num? fontSize;
   final String? fontColor;
@@ -520,8 +524,8 @@ class CardText {
     fontSize: json["fontSize"],
     fontColor: json["fontColor"],
     fontWeight: json["fontWeight"],
-    xPosition: json["xPosition"].toDouble(),
-    yPosition: json["yPosition"].toDouble(),
+    xPosition: json["xPosition"]?.toDouble(),
+    yPosition: json["yPosition"]?.toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
