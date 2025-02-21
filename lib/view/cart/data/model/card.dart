@@ -330,7 +330,7 @@ class Card {
 
   double get vat => totalPrice * (SharedPrefs.instance.appConfig?.vatValue ?? 0) / 100;
 
-  factory Card.fromJson(Map<String, dynamic> json) => Card(
+  factory Card.fromJson(Map<String, dynamic>  json) => Card(
     id: json["_id"],
     isSpecial: json["isSpecial"],
     color: json["color"] == null ? null : ColorModel.fromJson(json["color"]),

@@ -46,6 +46,8 @@ class _JoinUsPageState extends State<JoinUsPage> {
   bool isSuccess = false, submitting = false;
   final _formKey = GlobalKey<FormState>();
 
+  bool get isKeyboardAppear => MediaQuery.of(context).viewInsets.bottom == 0;
+
   void _onSubmit() async {
     if (isSuccess) {
       Get.back();
@@ -143,6 +145,18 @@ class _JoinUsPageState extends State<JoinUsPage> {
     });
   }
 
+  Widget _buildSubmissionButton() => Align(
+      alignment: Alignment.bottomCenter,
+      child: SafeArea(
+        child: GlobalFilledButton(
+          text: isSuccess ? 'home'.tr : 'send'.tr,
+          onPressed: _onSubmit,
+          height: 60.h,
+          width: 343.w,
+        ),
+      ),
+    );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,17 +167,9 @@ class _JoinUsPageState extends State<JoinUsPage> {
       ),
       body: Stack(
         children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SafeArea(
-              child: GlobalFilledButton(
-                text: isSuccess ? 'home'.tr : 'send'.tr,
-                onPressed: _onSubmit,
-                height: 60.h,
-                width: 343.w,
-              ),
-            ),
-          ),
+          // if keyboard appear make it false
+          if (isKeyboardAppear)
+            _buildSubmissionButton(),
           if (isSuccess)
             Center(
               child: SizedBox(
@@ -226,128 +232,132 @@ class _JoinUsPageState extends State<JoinUsPage> {
               ),
             )
           else
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.h),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    GlobalOutlineFormTextFeild(
-                      controller: _nameController,
-                      title: 'store_name'.tr,
-                      color:
-                          Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
-                      height: 52.h + 4,
-                      textAlignVertical: TextAlignVertical.center,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'please_enter_store_name'.tr;
-                        } else if (value.length < 3) {
-                          return 'store_name_must_be_at_least_3_characters'.tr;
-                        }
-
-                        return null;
-                      },
-                    ),
-                    GlobalOutlineFormTextFeild(
-                      controller: _descriptionController,
-                      title: 'message'.tr,
-                      color:
-                          Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'please_enter_store_description'.tr;
-                        } else if (value.length < 10) {
-                          return 'store_description_must_be_at_least_10_characters'.tr;
-                        }
-
-                        return null;
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h),
-                      child: GlobalOutlineFormTextFeild(
-                        controller: _linkController,
-                        title: 'store_link'.tr,
-                        color: Get.isDarkMode
-                            ? Colors.grey.shade900
-                            : Colors.white,
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 32.h),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      GlobalOutlineFormTextFeild(
+                        controller: _nameController,
+                        title: 'store_name'.tr,
+                        color: Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
                         height: 52.h + 4,
-                        expands: true,
+                        textAlignVertical: TextAlignVertical.center,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'please_enter_store_link'.tr;
-                          } else if (!GetUtils.isURL(value)) {
-                            return 'please_enter_valid_link'.tr;
+                            return 'please_enter_store_name'.tr;
+                          } else if (value.length < 3) {
+                            return 'store_name_must_be_at_least_3_characters'.tr;
                           }
-
+              
                           return null;
                         },
                       ),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          child: GlobalOutlineTextFeild(
-                            controller: _phoneController,
-                            title: 'phone_number'.tr,
-                            // color: Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
+                      GlobalOutlineFormTextFeild(
+                        controller: _descriptionController,
+                        title: 'message'.tr,
+                        color:
+                            Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
+                        maxLines: 3,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'please_enter_store_description'.tr;
+                          } else if (value.length < 10) {
+                            return 'store_description_must_be_at_least_10_characters'.tr;
+                          }
+              
+                          return null;
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: GlobalOutlineFormTextFeild(
+                          controller: _linkController,
+                          title: 'store_link'.tr,
+                          color: Get.isDarkMode
+                            ? Colors.grey.shade900
+                            : Colors.white,
+                          height: 52.h + 4,
+                          expands: true,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'please_enter_store_link'.tr;
+                            } else if (!GetUtils.isURL(value)) {
+                              return 'please_enter_valid_link'.tr;
+                            }
+              
+                            return null;
+                          },
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: GlobalOutlineTextFeild(
+                              controller: _phoneController,
+                              title: 'phone_number'.tr,
+                              // color: Get.isDarkMode ? Colors.grey.shade900 : Colors.white,
+                              height: 52.h,
+                              expands: true,
+                              // validator: (value) {
+                              //   if (value!.isEmpty) {
+                              //     return 'please_enter_phone'.tr;
+                              //   } else if (value.length < 9) {
+                              //     return 'phone_must_be_at_least_9_digits'.tr;
+                              //   }
+                              //   return null;
+                              // },
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(10),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 4.w),
+                          OutlineContainer(
+                            width: 67.w,
                             height: 52.h,
-                            expands: true,
-                            // validator: (value) {
-                            //   if (value!.isEmpty) {
-                            //     return 'please_enter_phone'.tr;
-                            //   } else if (value.length < 9) {
-                            //     return 'phone_must_be_at_least_9_digits'.tr;
-                            //   }
-                            //   return null;
-                            // },
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(10),
-                            ],
+                            radius: 11.r,
+                            borderColor: Get.isDarkMode
+                              ? Colors.grey[700]!
+                              : const Color(0xEEEEEEEE),
+                            child: CountriesButton(
+                              hideFlag: true,
+                              onCountryChange: (country) {
+                                _countryCode = country;
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 4.w),
-                        OutlineContainer(
-                          width: 67.w,
-                          height: 52.h,
-                          radius: 11.r,
-                          borderColor: Get.isDarkMode
-                            ? Colors.grey[700]!
-                            : const Color(0xEEEEEEEE),
-                          child: CountriesButton(
-                            hideFlag: true,
-                            onCountryChange: (country) {
-                              _countryCode = country;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.h),
-                      child: GlobalOutlineFormTextFeild(
-                        controller: _emailController,
-                        title: 'email'.tr,
-                        height: 52.h + 4,
-                        color: Get.isDarkMode
-                            ? Colors.grey.shade900
-                            : Colors.white,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'please_enter_email'.tr;
-                          } else if (!GetUtils.isEmail(value)) {
-                            return 'please_enter_valid_email'.tr;
-                          }
-
-                          return null;
-                        },
+                        ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: GlobalOutlineFormTextFeild(
+                          controller: _emailController,
+                          title: 'email'.tr,
+                          height: 52.h + 4,
+                          color: Get.isDarkMode
+                              ? Colors.grey.shade900
+                              : Colors.white,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'please_enter_email'.tr;
+                            } else if (!GetUtils.isEmail(value)) {
+                              return 'please_enter_valid_email'.tr;
+                            }
+              
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      if (!isKeyboardAppear)
+                        _buildSubmissionButton()
+                    ],
+                  ),
                 ),
               ),
             ),

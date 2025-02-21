@@ -200,7 +200,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
             children: [
               _buildInfo(
                 'color_price'.tr,
-                '${widget.card.proColor?.price.toStringAsFixed(2) ?? '-'} ${'sar'.tr}',
+                '${widget.card.proColor?.price!.toStringAsFixed(2) ?? '-'} ${'sar'.tr}',
                 'assets/icons/hugeicons_gift.svg',
               ),
               const SizedBox(height: 8),

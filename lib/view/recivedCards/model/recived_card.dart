@@ -111,7 +111,6 @@ class RecivedCard {
     this.proColor,
     required this.price,
     required this.text,
-    // required this.shapes,
     required this.isPaid,
     required this.shop,
     required this.isSpecial,
@@ -128,7 +127,7 @@ class RecivedCard {
   final ColorModel? color;
   final ProColor? proColor;
   final Price price;
-  final CardText text;
+  final CardText? text;
   final bool isPaid;
   final Shop? shop;
   final bool isSpecial;
@@ -145,7 +144,7 @@ class RecivedCard {
     color: json["color"] == null ? null : ColorModel.fromJson(json["color"]),
     proColor: json["proColor"] == null ? null : ProColor.fromJson(json["proColor"]),
     price: Price.fromJson(json["price"]),
-    text: CardText.fromJson(json["text"]),
+    text: json["text"] == null ? null : CardText.fromJson(json["text"]),
     isPaid: json["isPaid"],
     shop: json["shop"] == null ? null : Shop.fromJson(json["shop"]),
     isSpecial: json["isSpecial"],
@@ -163,7 +162,7 @@ class RecivedCard {
     "color": color?.toJson(),
     "proColor": proColor?.toJson(),
     "price": price.toJson(),
-    "text": text.toJson(),
+    "text": text?.toJson(),
     "isPaid": isPaid,
     "shop": shop?.toJson(),
     "isSpecial": isSpecial,

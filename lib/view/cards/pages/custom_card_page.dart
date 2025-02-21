@@ -914,7 +914,7 @@ class _CustomCardPageState extends State<CustomCardPage> {
     final celebrationLinkPrice = celebrateLink != null && celebrateLink!.isNotEmpty
       ? SharedPrefs.instance.appConfig?.celebrateLinkPrice ?? 0 : 0;
 
-    return (proColorPrice + proShape + celebrationIconPrice + celebrationLinkPrice).toString();
+    return (proColorPrice! + proShape + celebrationIconPrice + celebrationLinkPrice).toString();
   }
 
   @override

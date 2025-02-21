@@ -262,17 +262,11 @@ class HomePage extends StatelessWidget {
                                   },
                                 ),
                                 items: controller.slides!.map((slide) {
-                                  print(slide);
                                   return GestureDetector(
                                     onTap: () {
-                                      // Get.to(() => SplashScreen());
+
                                     },
-                                  // onTap: () {
-                                  //   if (slide.link != null) {
-                                  //     Get.to(() => ExplorePage());
-                                  //   }
-                                  // },
-                                  child: Container(
+                                    child: Container(
                                       height: 153.h,
                                       width: double.infinity,
                                       margin: EdgeInsets.symmetric(horizontal: 8.w/2),

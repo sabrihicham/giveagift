@@ -372,7 +372,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                               children: [
                                                 TicketRow(
                                                   info: 'color_price'.tr,
-                                                  value: '${widget.card?.proColor?.price.toStringAsFixed(2) ?? '-'} ${'sar'.tr}',
+                                                  value: '${widget.card?.proColor?.price!.toStringAsFixed(2) ?? '-'} ${'sar'.tr}',
                                                 ),
                                                 const SizedBox(height: 10),
                                               ],

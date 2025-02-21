@@ -183,7 +183,7 @@ class RecivedCardsPrview extends StatelessWidget {
           ),
           CardInfoLine(
             text: '${'message'.tr}: ',
-            value: '${card.text.message}',
+            value: '${card.text?.message}',
           ),
           CardInfoLine(
             text: '${'date'.tr}: ',

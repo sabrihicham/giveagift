@@ -222,29 +222,27 @@ class ColorsData {
 }
 
 class MyColor {
-  String id;
-  MyColor({required this.id});
+  String? id;
+  MyColor({this.id});
 }
 
 class ColorModel extends MyColor {
   ColorModel({
-    required super.id,
+    super.id,
     required this.hex,
   });
 
   final String hex;
 
-  String get id => super.id;
-
   factory ColorModel.fromJson(Map<String, dynamic> json) => ColorModel(
-        id: json["_id"],
-        hex: json["hex"],
-      );
+    id: json["_id"],
+    hex: json["hex"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "hex": hex,
-      };
+    "_id": id,
+    "hex": hex,
+  };
 
   // #A569BD -> 0xffA569BD
   Color get color => Color(int.parse('0xff$hex'.replaceAll(RegExp('#'), '')));
@@ -252,27 +250,23 @@ class ColorModel extends MyColor {
 
 class ProColor extends MyColor {
   ProColor({
-    required super.id,
+    super.id,
     required this.image,
-    required this.price,
-    required this.v,
+    this.price,
   });
 
   final String image;
-  final int price;
-  final int? v;
+  final int? price;
 
   factory ProColor.fromJson(Map<String, dynamic> json) => ProColor(
-        id: json["_id"],
-        image: json["image"],
-        price: json["price"],
-        v: json["__v"],
-      );
+    id: json["_id"],
+    image: json["image"],
+    price: json["price"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "image": image,
-        "price": price,
-        "__v": v,
-      };
+    "_id": id,
+    "image": image,
+    "price": price,
+  };
 }
